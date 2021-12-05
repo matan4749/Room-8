@@ -1,23 +1,19 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet,Image, Text, TextInput,  TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text,AuthContainer,SelectPicker,AuthTitle, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { signUp,SignIn,forgotPassword,signInWithGoogle } from '../firebase';
-import { useNavigation } from '@react-navigation/native';
+import { signUp,SignIn,signInWithGoogle } from '../firebase';
 
 
 
 
 
-
-const LoginScreen = () => {
+const SignUpScreen = () => {
     const [username, setUsername] = useState();
     const[email,setEmail]=useState('')
     const[password,setPassword]=useState('')
     const [phoneNumber, setPhoneNumber] = useState();
-   
-    
-   const navigation =useNavigation();
+    const [city, setCity] = useState();
   
 
    async function handlesignup(){
@@ -27,17 +23,11 @@ const LoginScreen = () => {
   async function handlesignIn(){
       
     await SignIn(email,password);
-    navigation.navigate('Home');
+}
 
-}
-async function handleforgotPassword(){
-      
-    await forgotPassword(email);
-}
 async function handlesignInWithGoogle(){
       
     await signInWithGoogle();
-    navigation.navigate('Home');
 }
  
 
@@ -49,7 +39,12 @@ async function handlesignInWithGoogle(){
         behavior="padding"
         >
            <View style={styles.inputContainer}>
-           
+           <TextInput
+            placeholder="username"
+            value={username}
+            onChangeText={text =>setUsername(text)}
+            style={styles.input}
+            />
            <TextInput
             placeholder="Email"
             keyboardType="email-address"
@@ -64,50 +59,40 @@ async function handlesignInWithGoogle(){
             style={styles.input}
             secureTextEntry
             />
-            
+            <TextInput
+            placeholder="PhoneNumber"
+            keyboardType="number-pad"
+            value={phoneNumber}
+            onChangeText={text =>setPhoneNumber(text)}
+            style={styles.input}
+            secureTextEntry
+            />
             </View>
             
+           
+
+           
            <View style={styles.buttonContainer}>
           
+               
                <TouchableOpacity
-               onPress={handlesignIn}
-               style={styles.button}
-               >
-                   <Text style={styles.buttonText}>Login</Text>
-
-               </TouchableOpacity>
-               <TouchableOpacity
-               onPress={()=>navigation.navigate('SignUp')}
+               onPress={handlesignup}
                style={[styles.button,styles.buttonOutline]}
                >
-                   <Text style={styles.buttonOutlineText}>SignUp</Text>
+                   <Text style={styles.buttonOutlineText}>Register</Text>
 
                </TouchableOpacity>
+               
                <TouchableOpacity
-               onPress={()=>navigation.navigate('forgotPassword')}
-               style={[styles.button,styles.buttonOutline]}
-               >
-                   <Text style={styles.buttonOutlineText}>Forgot Password</Text>
-
-               </TouchableOpacity>
-               <View>
-           <TouchableOpacity
                onPress={handlesignInWithGoogle}
                style={[styles.button,styles.buttonOutline]}
+               
                >
-                   <View style={styles.categoryIcon}>
-                    <Image
-                      source={require("../assets/google-sign-in.png")}
-                      style={styles.sliderImage}
-                    />
-                  </View>
                    
-                   <Text style={styles.buttonOutlineText}>continue with Google </Text>
+                   <Text style={styles.buttonOutlineText}>signIn With Google</Text>
 
                </TouchableOpacity>
 
-           </View>
-               
 
            </View>
            
@@ -115,7 +100,7 @@ async function handlesignInWithGoogle(){
     )
 }
 
-export default LoginScreen
+export default SignUpScreen
 
 const styles = StyleSheet.create({
     container:{
@@ -135,24 +120,6 @@ borderRadius:10,
 marginTop:5,
 
 },
-categoryIcon: {
-    borderWidth: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    width: 70,
-    height: 70,
-    left: 10,
-    backgroundColor: "#fdeae7" /* '#FF6347' */,
-    borderRadius: 50,
-    marginHorizontal: 10,
-},
-sliderImage: {
-    height: "100%",
-    width: "100%",
-    alignSelf: "center",
-    borderRadius: 8,
-  },
 buttonContainer:{
     width:'60%',
     justifyContent:'center',
