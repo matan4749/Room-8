@@ -1,4 +1,5 @@
-
+import { getFirestore } from "firebase/firestore"
+import 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 import { getAuth,createUserWithEmailAndPassword,
   signInWithEmailAndPassword,sendPasswordResetEmail,signInWithPopup,GoogleAuthProvider } from "firebase/auth";
@@ -19,7 +20,11 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
- export const auth = getAuth();
+ const auth = getAuth();
+const db = getFirestore();
+export {auth,db};
+
+
  
 
  export function signUp(email,password){
@@ -53,7 +58,5 @@ export function forgotPassword(email){
 }
 export function signInWithGoogle(){
   return signInWithPopup(auth,new GoogleAuthProvider())
-}
-export function Build(){
-  return Build(Address,Rooms,Rent,NumberOfPartners)
+
 }

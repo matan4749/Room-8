@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet,Image, Text, TextInput,  TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { signUp,SignIn,forgotPassword,signInWithGoogle } from '../firebase';
+import { signUp,SignIn,forgotPassword } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
+import useAuth from '../hooks/useAuth';
 
 
 
@@ -11,13 +12,19 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const LoginScreen = () => {
+    const{signInWithGoogle,loading}=useAuth();
     const [username, setUsername] = useState();
     const[email,setEmail]=useState('')
     const[password,setPassword]=useState('')
     const [phoneNumber, setPhoneNumber] = useState();
    
-    
+    //const{signInWithGoogle}=useAuth();
    const navigation =useNavigation();
+   useLayoutEffect(() =>{
+navigation.setOptions({
+    headerShoen :false,
+})
+   },[])
   
 
    async function handlesignup(){
@@ -49,6 +56,7 @@ async function handlesignInWithGoogle(){
         behavior="padding"
         >
            <View style={styles.inputContainer}>
+               
            
            <TextInput
             placeholder="Email"
@@ -92,7 +100,7 @@ async function handlesignInWithGoogle(){
                </TouchableOpacity>
                <View>
            <TouchableOpacity
-               onPress={handlesignInWithGoogle}
+               onPress={signInWithGoogle}
                style={[styles.button,styles.buttonOutline]}
                >
                    <View style={styles.categoryIcon}>

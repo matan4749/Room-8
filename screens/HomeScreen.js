@@ -1,147 +1,79 @@
-import React from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput,  TouchableOpacity, View } from 'react-native'
-import  { useState } from 'react'
-import { useNavigation } from '@react-navigation/native';
 
+import React, { useLayoutEffect, useRef, useState,useEffect } from 'react'
+import { View,StyleSheet,Image, Text,TouchableOpacity,SafeAreaView } from 'react-native'
+import Swiper from 'react-native-deck-swiper'
+import { db  } from '../firebase'
+import { onSnapshot,collection,doc } from '@firebase/firestore'
+import useAuth from '../hooks/useAuth'
+import { useNavigation } from '@react-navigation/native'
+import tw from "tailwind-rn";
+  const DUMMY_DATA =[
+      {
+          firstName:"Matan",
+          lastName:"Amar",
+          id:123,
+          PotoURL:"https://img.mako.co.il/2019/10/29/Partners_App_1019_9_c.jpg"
+      },
+      {
+        firstName:"Matan",
+        lastName:"Amar",
+        id:123,
+        PotoURL:"https://medias.timeout.co.il/www/uploads/2020/03/1-750x500.jpg"
+    },{
+        firstName:"Matan",
+        lastName:"Amar",
+        id:23,
+        PotoURL:"https://img.mako.co.il/2021/02/08/minkoffNight_autoOrient_i.jpg"
+    },{
+        firstName:"Matan",
+        lastName:"Amar",
+        id:13,
+        PotoURL:"https://medias.timeout.co.il/www/uploads/2020/05/2-750x500.jpg"
+    } 
+  ];
 
 const HomeScreen = () => {
-    const [Address, setAddress] = useState();
-    const[Rooms,setRooms]=useState('')
-    const[Rent,setRent]=useState('')
-    const [NumberOfPartners, setNumberOfPartners] = useState();
+    const navigation=useNavigation();
+    const {logout,user} =useAuth();
+    const[Aprment,setAprment]=useState([]);
+    const swipeRef=useRef(null);
    
-    
-   const navigation =useNavigation();
-  
-
-   async function handleBuildingPartment(){
-      
-        await Build(Address,Rooms,Rent,NumberOfPartners);
-  }
-    return (
-        <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-        >
-           <View style={styles.inputContainer}>
-           
-           <TextInput
-            placeholder="Address"
-            keyboardType="email-address"
-            value={Address}
-            onChangeText={text =>setAddress(text)}
-            style={styles.input}
-            />
-            <TextInput
-            placeholder="Rooms"
-            value={Rooms}
-            onChangeText={text =>setRooms(text)}
-            style={styles.input}
-            />
-             <TextInput
-            placeholder="Number Of Partners"
-            value={NumberOfPartners}
-            onChangeText={text =>setNumberOfPartners(text)}
-            style={styles.input}
-            />
-            <TextInput
-            placeholder="Rent"
-            value={Rent}
-            onChangeText={text =>setRent(text)}
-            style={styles.input}
-            />
-            </View>
+    useLayoutEffect(() => 
+        onSnapshot(collection(db,"Aprment"),(snapshot) =>{
+                
+                navigation.navigate('addAprment')
             
-           <View style={styles.buttonContainer}>
-          
-               <TouchableOpacity
-               onPress={handleBuildingPartment}
-               style={styles.button}
-               >
-                   <Text style={styles.buttonText}>Add</Text>
+        }),
+     []
+     );
+     useEffect(() => {
+        
+         const BuildAp = async ()=>{
+             onSnapshot(collection(db,"Aprtment"),(snapshot)=>{
+                 setAprment(
+                     snapshot.docs.map((doc) =>({
+                         id:doc.id,
+                         ...doc.data(),
+                     }))
+                 );
 
-               </TouchableOpacity>
-               
-           </View>
-           
-        </KeyboardAvoidingView>
-    )
-}
+             });
+
+         };
+          return()=> BuildAp();
+         
+     }, []);
+     
+    return (
+<SafeAreaView>
+    <View>
+       <TouchableOpacity>
 
 
-export default HomeScreen
+        </TouchableOpacity> 
+    </View>
+</SafeAreaView>
+    );
 
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent: "center",
-        alignItems:'center',
-    },
-    
-inputContainer:{
-width:'80%'
-},
-input:{
-backgroundColor:'white',
-paddingHorizontal:15,
-paddingVertical:10,
-borderRadius:10,
-marginTop:5,
-
-},
-categoryIcon: {
-    borderWidth: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    width: 70,
-    height: 70,
-    left: 10,
-    backgroundColor: "#fdeae7" /* '#FF6347' */,
-    borderRadius: 50,
-    marginHorizontal: 10,
-},
-sliderImage: {
-    height: "100%",
-    width: "100%",
-    alignSelf: "center",
-    borderRadius: 8,
-  },
-buttonContainer:{
-    width:'60%',
-    justifyContent:'center',
-    alignItems:'center',
-    marginTop:40,
-
-},
-button:{
-backgroundColor:'#0782F9',
-width:'100%',
-padding:15,
-borderRadius:10,
-alignItems:'center'
-
-},
-buttonOutline:{
-    backgroundColor:'white',
-    marginTop:5,
-    borderColor:'#0782F9',
-    //borderWidth:'2'
-   
-},
-buttonText:{
-color:'white',
-fontWeight:'700',
-fontSize:16,
-},
-buttonOutlineText:{
-    color:'#0782F9',
-    fontWeight:'700',
-    fontSize:16,
-    
-},
-
-    
-})
-
-    
+ }
+ export default HomeScreen;

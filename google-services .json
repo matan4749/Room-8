@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "69219582263",
+    "firebase_url": "https://room8-4a5e6-default-rtdb.firebaseio.com",
+    "project_id": "room8-4a5e6",
+    "storage_bucket": "room8-4a5e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69219582263:android:2659b15d2d09784a875ab2",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69219582263-9fbgf3tlohak9pj7dmkq3rq5u55hvp4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaBggyescwy3jheVyjOY-DuR6y7Yk8soM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69219582263-9fbgf3tlohak9pj7dmkq3rq5u55hvp4j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "69219582263-4smi599e4c5m9fq9cuskio9gff97rbaq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
