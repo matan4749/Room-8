@@ -12,7 +12,7 @@ import useAuth from '../hooks/useAuth';
 
 
 const LoginScreen = () => {
-    const{signInWithGoogle,loading}=useAuth();
+    const { user, loading, error, signInWithGoogle, logout } = useAuth();
     const [username, setUsername] = useState();
     const[email,setEmail]=useState('')
     const[password,setPassword]=useState('')
@@ -41,12 +41,7 @@ async function handleforgotPassword(){
       
     await forgotPassword(email);
 }
-async function handlesignInWithGoogle(){
-      
-    await signInWithGoogle();
-    navigation.navigate('Home');
-}
- 
+
 
 
 

@@ -34,7 +34,7 @@ setAddress("");
 */
   }
   const BuildAprtment =()=>{
-addDoc(collection(db,'Aprment'),{
+addDoc(collection(db,'Aprment', user.uid),{
     
     Address:Address,
     Rooms:Rooms,
@@ -95,7 +95,7 @@ addDoc(collection(db,'Aprment'),{
             />
              <TextInput
             placeholder="photoURL"
-            value={Rooms}
+            value={image}
             onChangeText={text =>setimage(text)}
             style={styles.input}
             />

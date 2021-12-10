@@ -13,17 +13,26 @@ const StackNavigator = () => {
 
     return (
       <Stack.Navigator>
-        screenOptions ={{
-          headerShown:false,
-        }}
-        
+       
+       {user ? (
+        <>
           
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="addAprment" component={AddApartment} />
+          
+          <Stack.Group> 
+        <Stack.Screen name="Home" component={HomeScreen} />
+        
+        <Stack.Screen name="forgotPassword" component={forgotPasswordScreen} />
+        </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: "modal" }}>
+            <Stack.Screen name="addAprment" component={AddApartment} />
+          </Stack.Group>
+          </>
+      ) : (
+        <Stack.Group>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="forgotPassword" component={forgotPasswordScreen} />
-        
+        </Stack.Group>
+      )}
       </Stack.Navigator>
     
     )
