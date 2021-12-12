@@ -1,8 +1,10 @@
 import { getFirestore } from "firebase/firestore"
 import 'firebase/firestore';
 import { initializeApp } from "firebase/app";
-import { getAuth,createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,sendPasswordResetEmail,signInWithPopup,GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup, GoogleAuthProvider
+} from "firebase/auth";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
@@ -20,15 +22,15 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
- const auth = getAuth();
+const auth = getAuth();
 const db = getFirestore();
-export {auth,db};
+export { auth, db };
 
 
- 
 
- export function signUp(email,password){
-    return createUserWithEmailAndPassword(auth,email,password)
+
+export function signUp(email, password) {
+  return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
@@ -40,8 +42,8 @@ export {auth,db};
       // ..
     });
 }
-export function SignIn(email,password){
-    return signInWithEmailAndPassword(auth,email.password)
+export function SignIn(email, password) {
+  return signInWithEmailAndPassword(auth, email.password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
@@ -53,10 +55,10 @@ export function SignIn(email,password){
       // ..
     });
 }
-export function forgotPassword(email){
+export function forgotPassword(email) {
   return sendPasswordResetEmail(auth, email)
 }
-export function signInWithGoogle(){
-  return signInWithPopup(auth,new GoogleAuthProvider())
+export function signInWithGoogle() {
+  return signInWithPopup(auth, new GoogleAuthProvider())
 
 }
