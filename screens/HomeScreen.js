@@ -24,7 +24,7 @@ const HomeScreen = () => {
     }, [])
 
     async function getAprtments() {
-        // var ref = doc();
+
         let docSnap = await getDocs(collection(db, 'Aprment'));
         let newArr = Aprment;
         docSnap.forEach((doc) => {
