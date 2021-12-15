@@ -13,17 +13,21 @@ import tw from "tailwind-rn";
 
 
 
+
 const LoginScreen = () => {
     const { user, loading, error, signInWithGoogle, logout } = useAuth();
     const [username, setUsername] = useState();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState();
+    const navigation = useNavigation();
 
     //const{signInWithGoogle}=useAuth();
-    const navigation = useNavigation();
+
     useLayoutEffect(() => {
+        navigation.navigate("Home")
         navigation.setOptions({
+
             headerShoen: false,
         })
     }, [])
@@ -55,6 +59,36 @@ const LoginScreen = () => {
                 style={tw("flex-1")}
                 source={{ uri: "https://sites.education.gov.il/cloud/home/tikshuv/PublishingImages/shituf_peula.jpg" }}
             >
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("Home")}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>guest</Text>
+
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("SignUp")}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>signUp</Text>
+
+                </TouchableOpacity>
+
+
+
+
+
+                <TouchableOpacity
+                    onPress={signInWithGoogle}
+                    style={[
+                        tw("bg-white absolute bottom-20 w-32 rounded-2xl p-4"),
+                        { marginHorizontal: "25%" },
+                    ]}
+                ><Image style={tw("h-14 w-40")} source={require("../google.png")} />
+
+
+
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={signInWithGoogle}
                     style={[

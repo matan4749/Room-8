@@ -46,7 +46,8 @@ const HomeScreen = () => {
                     >
                         <Image
                             style={tw("h-10 w-10 rounded-full")}
-                            source={{ uri: user.photoURL }}
+                            //source={{ uri: user.photoURL }}
+                            source={require("../user.png")}
                         />
                     </TouchableOpacity>
                 )}

@@ -34,6 +34,7 @@ const StackNavigator = () => {
       ) : (
         <Stack.Group>
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
         </Stack.Group>
       )}

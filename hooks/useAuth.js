@@ -15,6 +15,7 @@ import {
   signOut,
 } from "@firebase/auth";
 import * as RootNavigation from "../RootNavigation"
+import { useNavigation } from '@react-navigation/native'
 
 const AuthContext = createContext({});
 
@@ -33,6 +34,8 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingInitial, setLoadingInitial] = useState(true);
+  const navigation = useNavigation();
+
 
   useEffect(
     () =>
@@ -68,6 +71,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+    navigation.navigate("Home")
     setLoading(true);
 
     await signOut(auth)
