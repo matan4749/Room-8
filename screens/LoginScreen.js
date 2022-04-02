@@ -25,7 +25,7 @@ const LoginScreen = () => {
     //const{signInWithGoogle}=useAuth();
 
     useLayoutEffect(() => {
-        navigation.navigate("Home")
+
         navigation.setOptions({
 
             headerShoen: false,

@@ -15,6 +15,7 @@
     "bootstrap-select": "^1.13.18",
     "expo": "~43.0.2",
     "expo-google-app-auth": "~9.0.0",
+    "expo-image-picker": "~11.0.3",
     "expo-status-bar": "~1.1.0",
     "firebase": "^9.5.0",
     "firebaseui": "^6.0.0",
@@ -23,13 +24,13 @@
     "react-native": "0.64.3",
     "react-native-deck-swiper": "^2.0.5",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-gifted-chat": "^0.16.3",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
     "tailwind-react-native-classnames": "^1.5.1",
-    "tailwind-rn": "^3.0.1",
-    "expo-image-picker": "~11.0.3"
+    "tailwind-rn": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

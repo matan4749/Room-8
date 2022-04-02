@@ -71,13 +71,14 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    navigation.navigate("Home")
     setLoading(true);
 
     await signOut(auth)
       .catch((error) => setError(error))
       .finally(() => {
         setLoading(false);
+
+
       });
   };
 

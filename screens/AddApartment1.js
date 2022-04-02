@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useRef, useState, useEffect } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, Button, Image } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native';
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import useAuth from '../hooks/useAuth';
 import { db } from '../firebase';
 import * as ImagePicker from 'expo-image-picker';
@@ -18,7 +18,7 @@ const AddApartment = () => {
     const [Apartment, setApartment] = useState([]);
     const [image, setImage] = useState(null);
     const { user } = useAuth();
-    const incompleteForm = !Address || !Rooms || !Rent;
+
 
     const navigation = useNavigation();
 
@@ -27,8 +27,8 @@ const AddApartment = () => {
 
     }
     const BuildAprtment = () => {
-        addDoc(collection(db, 'Aprments', user.uid), {
-            id: user.uid,
+        addDoc(collection(db, 'Aprment'), {
+
             Address: Address,
             Rooms: Rooms,
             Rent: Rent,
@@ -73,7 +73,6 @@ const AddApartment = () => {
     const { logout } = useAuth()
     return (
 
-
         <KeyboardAvoidingView
 
             style={styles.container}
@@ -86,69 +85,49 @@ const AddApartment = () => {
             </View>
             <View style={styles.inputContainer}>
                 <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
-                    שלום {user.displayName}❤️
+                    Welcome {user.displayName}!
                 </Text>
-                <Text style={tw("text-center p-4 font-bold text-red-400")}>
-                    Step 1: Location of the apartment
-                </Text>
+                <View><Text>Adding an apartment</Text></View>
+
                 <TextInput
+                    placeholder="Address"
+                    keyboardType="email-address"
                     value={Address}
-                    onChangeText={setAddress}
-                    style={tw("text-center text-xl pb-2")}
-                    placeholder="Enter an address of the apartment "
+                    onChangeText={text => setAddress(text)}
+                    style={styles.input}
                 />
-                <Text style={tw("text-center p-4 font-bold text-red-400")}>
-                    Step 1: Number of rooms
-                </Text>
                 <TextInput
+                    placeholder="Rooms"
                     value={Rooms}
-                    onChangeText={setRooms}
-                    style={tw("text-center text-xl pb-2")}
-                    placeholder="Enter the number of rooms in the apartment "
+                    onChangeText={text => setRooms(text)}
+                    style={styles.input}
                 />
-                <Text style={tw("text-center p-4 font-bold text-red-400")}>
-                    Step 1: Number of partners
-                </Text>
                 <TextInput
+                    placeholder="Number Of Partners"
                     value={NumberOfPartners}
-                    onChangeText={setNumberOfPartners}
-                    style={tw("text-center text-xl pb-2")}
-                    placeholder="Enter the number of partners in the apartment "
+                    onChangeText={text => setNumberOfPartners(text)}
+                    style={styles.input}
                 />
-                <Text style={tw("text-center p-4 font-bold text-red-400")}>
-                    Step 1: The cost of rent
-                </Text>
                 <TextInput
+                    placeholder="Rent"
                     value={Rent}
-                    onChangeText={setRent}
-                    style={tw("text-center text-xl pb-2")}
-                    placeholder="Enter the cost of renting the apartment "
+                    onChangeText={text => setRent(text)}
+                    style={styles.input}
                 />
-
-
-
-
-
-
-
 
             </View>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Button title="Select image" onPress={pickImage} />
+                <Button title="בחר תמונה מהגלריה" onPress={pickImage} />
                 {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
             </View >
             <View style={styles.buttonContainer}>
 
-
                 <TouchableOpacity
-                    disabled={incompleteForm}
-                    style={[
-                        tw("w-64 p-3 rounded-xl absolute bottom-10"),
-                        incompleteForm ? tw("bg-gray-400") : tw("bg-red-400"),
-                    ]}
                     onPress={BuildAprtment}
+                    style={styles.button}
                 >
-                    <Text style={tw("text-center text-white text-xl")}>Update Aprtment</Text>
+                    <Text style={styles.buttonText}>Add</Text>
+
                 </TouchableOpacity>
 
             </View>
