@@ -1,11 +1,12 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React from 'react'
-import useAuth from './hooks/useAuth';
-import AddApartment from './screens/AddApartment';
-import forgotPasswordScreen from './screens/forgotPasswordScreen';
-import HomeScreen from './screens/HomeScreen';
-import LoginScreen from './screens/LoginScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import useAuth from "./hooks/useAuth";
+import AddApartment from "./screens/AddApartment";
+import forgotPasswordScreen from "./screens/forgotPasswordScreen";
+import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import FilterScreen from "./screens/FilterScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -17,19 +18,19 @@ const StackNavigator = () => {
         headerShown: false,
       }}
     >
-
       {user ? (
         <>
-
-
           <Stack.Group>
             <Stack.Screen name="Home" component={HomeScreen} />
 
-            <Stack.Screen name="forgotPassword" component={forgotPasswordScreen} />
+            <Stack.Screen
+              name="forgotPassword"
+              component={forgotPasswordScreen}
+            />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: "modal" }}>
             <Stack.Screen name="addAprment" component={AddApartment} />
-
+            <Stack.Screen name="FilterScreen" component={FilterScreen} />
           </Stack.Group>
         </>
       ) : (
@@ -39,8 +40,7 @@ const StackNavigator = () => {
         </Stack.Group>
       )}
     </Stack.Navigator>
+  );
+};
 
-  )
-}
-
-export default StackNavigator
+export default StackNavigator;

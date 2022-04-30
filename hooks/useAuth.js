@@ -14,8 +14,8 @@ import {
   signInWithCredential,
   signOut,
 } from "@firebase/auth";
-import * as RootNavigation from "../RootNavigation"
-import { useNavigation } from '@react-navigation/native'
+import * as RootNavigation from "../RootNavigation";
+import { useNavigation } from "@react-navigation/native";
 
 const AuthContext = createContext({});
 
@@ -36,7 +36,6 @@ export function AuthProvider({ children }) {
   const [loadingInitial, setLoadingInitial] = useState(true);
   const navigation = useNavigation();
 
-
   useEffect(
     () =>
       onAuthStateChanged(auth, async (user) => {
@@ -52,9 +51,10 @@ export function AuthProvider({ children }) {
 
   const signInWithGoogle = async () => {
     setLoading(true);
-
+    console.log("rgdgdrgdr");
     await Google.logInAsync(config)
       .then(async (logInResult) => {
+        console.log({ logInResult });
         if (logInResult.type === "success") {
           const { idToken, accessToken } = logInResult;
           const credential = GoogleAuthProvider.credential(
@@ -77,8 +77,6 @@ export function AuthProvider({ children }) {
       .catch((error) => setError(error))
       .finally(() => {
         setLoading(false);
-
-
       });
   };
 

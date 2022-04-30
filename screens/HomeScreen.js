@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
+  Modal,
 } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { db } from "../firebase";
@@ -15,39 +16,52 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import tw from "tailwind-rn";
-
+import FilterScreen from "./FilterScreen";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
   const [Aprment, setAprment] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
   const swipeRef = useRef(null);
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
-    console.log("test1");
+    //console.log("test1");
     getAprtments();
   }, []);
 
+  const filterItems = (filterBy) => {
+    let copy = filteredItems;
+    if (filterBy.rooms) {
+      copy = Aprment.filter((item) => item.Rooms == filterBy.rooms);
+    }
+    if (filterBy.roomates) {
+      copy = copy.filter((item) => item.roomates == filterBy.roomates);
+    }
+    if (filterBy.isAnimals === "yes") {
+      copy = copy.filter((item) => item.isAnimals);
+    } else if (filterBy.isAnimals === "no") {
+      copy = copy.filter((item) => !item.isAnimals);
+    }
+    setFilteredItems(copy);
+  };
+
   async function getAprtments() {
     let docSnap = await getDocs(collection(db, "Aprment"));
-
     let newArr = Aprment;
-    // docSnap.forEach((doc) => {
-    //   //console.log(doc.data());
-    //   newArr.push(doc.data());
-    // });
-    console.log(docSnap);
-    setAprment(docSnap);
-
-    // console.log("abc", newArr);
-
-    //setAprment(newArr);
+    docSnap.forEach((doc) => {
+      // console.log(doc.data());
+      newArr.push(doc.data());
+    });
+    setAprment(newArr);
+    setFilteredItems(newArr);
   }
-  //   console.log(Aprment);
-  const getLogout = () => {
-    navigation.navigate("Login");
+  //console.log(Aprment);
+  // const getLogout = () => {
+  //   navigation.navigate("Login");
 
-    logout;
-  };
+  //   logout;
+  // };
 
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
@@ -84,7 +98,7 @@ const HomeScreen = () => {
           <Swiper
             ref={swipeRef}
             containerStyle={{ backgroundColor: "transparent" }}
-            cards={Aprment}
+            cards={filteredItems}
             overlayLabels={{
               left: {
                 title: "לא אהבתי",
@@ -126,9 +140,9 @@ const HomeScreen = () => {
                   >
                     <View>
                       <Text style={tw("text-lg font-bold")}>
-                        מספר שותפים: {card?.NumberOfRooms}
+                        מספר שותפים: {card?.NumberOfPartners}
                       </Text>
-                      <Text> שכירות:{card?.Rent}</Text>
+                      <Text> בעלי חיים:{card?.isAnimals ? "יש" : "אין"}</Text>
                       <Text>מספר חדרים:{card?.Rooms}</Text>
                     </View>
                     <Text style={tw("text-2xl font-bold")}>
@@ -192,6 +206,18 @@ const HomeScreen = () => {
         >
           <AntDesign name="heart" size={24} color="green" />
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
+          <Image style={tw("h-14 w-14")} source={require("../filter.png")} />
+        </TouchableOpacity>
+        <Modal animatiomnType="slide" visible={showFilter}>
+          <FilterScreen
+            closeModal={(filterBy) => {
+              console.log("heree");
+              filterItems(filterBy);
+              setShowFilter(false);
+            }}
+          />
+        </Modal>
       </View>
 
       <StatusBar style="auto" />
