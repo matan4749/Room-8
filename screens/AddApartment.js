@@ -34,7 +34,7 @@ const AddApartment = () => {
             Rent: Rent,
             NumberOfPartners: NumberOfPartners,
             photoURL: image,
-
+            // userId:user.uid
         }).then(() => {
             navigation.navigate('Home');
         })

@@ -18,6 +18,7 @@ import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import tw from "tailwind-rn";
 import FilterScreen from "./FilterScreen";
 import { AppContext } from "../contexts/appContext";
+import { userService } from "../services/userService";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
@@ -25,9 +26,10 @@ const HomeScreen = () => {
   const [filteredItems, setFilteredItems] = useState([]);
   const swipeRef = useRef(null);
   const [showFilter, setShowFilter] = useState(false);
+  const context = useContext(AppContext);
 
   useEffect(() => {
-    getAprtments();
+      getAprtments();
   }, []);
 
   const filterItems = (filterBy) => {
@@ -50,14 +52,23 @@ const HomeScreen = () => {
     let docSnap = await getDocs(collection(db, "Aprment"));
     let newArr = Aprment;
     docSnap.forEach((doc) => {
-      // console.log(doc.data());
-      newArr.push(doc.data());
+      if (user.favs) {
+        const found = user.favs.find(fav =>
+          fav.id === doc.id
+        )
+        console.log({found});
+        if (!found)
+          newArr.push({ ...doc.data(), id: doc.id });
+      } else {
+        newArr.push({ ...doc.data(), id: doc.id });
+      }
+
     });
+    console.log({ newArr });
     setAprment(newArr);
     setFilteredItems(newArr);
   }
 
-  const context = useContext(AppContext);
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
       <View style={styles.header}>
@@ -173,10 +184,13 @@ const HomeScreen = () => {
             onSwipedLeft={(cardIndex) => {
               console.log("Swipe PASS--", cardIndex);
               // swipeLeft(cardIndex);
+
             }}
             onSwipedRight={(cardIndex) => {
-              console.log("Swipe MATCH", cardIndex);
+              console.log("Swipe MATCH", cardIndex)
+
               //swipeRight(cardIndex);
+              userService.addFav(user, filteredItems[cardIndex])
             }}
             cardIndex={0}
             backgroundColor={"#4FD0E9"}
