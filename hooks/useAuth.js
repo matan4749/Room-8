@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import * as Google from "expo-google-app-auth";
+import SideMenu from 'react-native-side-menu-updated'
 
 import { auth } from "../firebase";
 import {
@@ -16,6 +17,9 @@ import {
 } from "@firebase/auth";
 import * as RootNavigation from "../RootNavigation";
 import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, Text, View } from "react-native-web";
+import { AppContext } from "../contexts/appContext";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const AuthContext = createContext({});
 
@@ -100,10 +104,46 @@ export function AuthProvider({ children }) {
     [user, loading, error]
   );
 
+  const Menu = () => {
+    console.log({ navigation });
+    return <View>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => navigation.navigate('MyApratments')}>
+        <Text style={styles.menuText}>my apartments</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => navigation.navigate('Favorites')}>
+        <Text style={styles.menuText}>favorites</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.menuItem}
+      // onPress={logout}
+      >
+        <Text style={styles.menuText}>logout</Text>
+      </TouchableOpacity>
+    </View>
+  }
+
+  const [showMenu, setShowMenu] = useState(false)
   return (
-    <AuthContext.Provider value={memoedValue}>
-      {!loadingInitial && children}
-    </AuthContext.Provider>
+    <AppContext.Provider value={{
+      showMenu, toggleMenu: setShowMenu
+    }}>
+      <SideMenu
+        isOpen={showMenu}
+        disableGestures={true}
+        menu={<Menu />}>
+
+        <AuthContext.Provider value={memoedValue}>
+          {!loadingInitial && children}
+        </AuthContext.Provider>
+
+      </SideMenu>
+    </AppContext.Provider>
+
+
   );
 }
 
@@ -112,3 +152,12 @@ export function AuthProvider({ children }) {
 export default function useAuth() {
   return useContext(AuthContext);
 }
+
+const styles = StyleSheet.create({
+  menuItem: {
+
+  },
+  menuText: {
+
+  }
+})

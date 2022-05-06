@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -17,6 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import tw from "tailwind-rn";
 import FilterScreen from "./FilterScreen";
+import { AppContext } from "../contexts/appContext";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
@@ -26,7 +27,6 @@ const HomeScreen = () => {
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
-    //console.log("test1");
     getAprtments();
   }, []);
 
@@ -56,34 +56,32 @@ const HomeScreen = () => {
     setAprment(newArr);
     setFilteredItems(newArr);
   }
-  //console.log(Aprment);
-  // const getLogout = () => {
-  //   navigation.navigate("Login");
 
-  //   logout;
-  // };
-
+  const context = useContext(AppContext);
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
-      <View style={tw("items-center relative")}>
+      <View style={styles.header}>
         {Aprment && (
-          <TouchableOpacity
-            onPress={logout}
-            style={tw("absolute left-5 top-3")}
-          >
-            <Image
-              style={tw("h-10 w-10 rounded-full")}
-              source={{ uri: user.photoURL }}
+          <View style={{ position: 'relative' }}>
+            <TouchableOpacity
+              onPress={() => context.toggleMenu(!context.showMenu)}
+            >
+              <Image
+                style={tw("h-10 w-10 rounded-full")}
+                source={{ uri: user.photoURL }}
               //source={require("../user.png")}
-            />
-          </TouchableOpacity>
+              />
+            </TouchableOpacity>
+          </View>
         )}
+
+
 
         <TouchableOpacity onPress={() => navigation.navigate("addAprment")}>
           <Image style={tw("h-14 w-14")} source={require("../logo.png")} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={tw("absolute right-5 top-3")}>
+        <TouchableOpacity>
           <Ionicons
             onPress={() => navigation.navigate("forgotPassword")}
             name="chatbubbles-sharp"
@@ -228,6 +226,18 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "space-between",
+  },
+  menuItem: {
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomColor: 'black',
+    borderWidth: 1
+  },
   cardShadow: {
     shadowColor: "#000",
     shadowOffset: {
