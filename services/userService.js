@@ -1,11 +1,23 @@
 import { db } from "../firebase";
-import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, setDoc, doc, getDocs } from "firebase/firestore";
+import { apartmentService } from "./apartmentService";
 export const userService = {
-  createUser, addFav
+  createUser, addFav, getByEmail
 };
 
-function createUser(user) {
-  setDoc(collection(db, "users"), {
+async function createUser(user) {
+  const users = await getUsers()
+  const userExist = users.find(u => u.email === user.email)
+
+  // const allApartmments = await apartmentService.getApartments()
+  if (userExist) {
+    // userExist.favs.forEach(fav => {
+    // const apartment=  allApartmments.find(ap=>ap.id===fav.id)
+    // if(!apartment)
+    // })
+    return userExist
+  }
+  setDoc(doc(db, "users", user.email), {
     uid: user.uid,
     email: user.email,
     photoURL: user.photoURL,
@@ -20,6 +32,22 @@ function createUser(user) {
     });
 }
 
+async function getByEmail(email) {
+  const users = await getUsers()
+  return users.find(u => u.email === email)
+}
+
+
+async function getUsers() {
+  let docs = await getDocs(collection(db, "users"));
+  const users = []
+  docs.forEach(doc => {
+    users.push(doc.data())
+  })
+  console.log({ users });
+  return users
+}
+
 
 function addFav(user, fav) {
   console.log({ user, fav });
@@ -28,8 +56,8 @@ function addFav(user, fav) {
   } else {
     user.favs = [fav]
   }
-  console.log({ user });
-  setDoc(doc(db, "users", user.id), { favs: user.favs })
+  console.log({ user })
+  setDoc(doc(db, "users", user.email), JSON.parse(JSON.stringify(user)))
 }
 
 

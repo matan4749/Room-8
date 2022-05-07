@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Image, Text, View } from 'react-native-web'
+import { FlatList, Image, Text, View } from 'react-native'
 import useAuth from '../hooks/useAuth';
 
 function Favorites() {
@@ -14,10 +14,12 @@ function Favorites() {
         ]}
         renderItem={({ item }) => {
           return <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={{ uri: item.photoURL }} />
+            <Image source={item.photoURL} style={{ height: 100, width: 100 }} />
             <View>
-              <Text>{item.address}</Text>
-              <Text> rooms:{item.rooms}</Text>
+              <Text> address:{item.Address}</Text>
+              <Text> rooms:{item.Rooms}</Text>
+              <Text> rent:{item.Rent}</Text>
+              <Text> animals:{item.isAnimals ? 'yes' : 'no'}</Text>
             </View>
           </View>
         }}

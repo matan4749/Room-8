@@ -27,18 +27,17 @@ const AddApartment = () => {
 
     }
     const BuildAprtment = () => {
-        addDoc(collection(db, 'Aprments', user.uid), {
-            id: user.uid,
+        setDoc(doc(db, 'apartments', user.email), {
             Address: Address,
             Rooms: Rooms,
             Rent: Rent,
             NumberOfPartners: NumberOfPartners,
             photoURL: image,
-            // userId:user.uid
         }).then(() => {
             navigation.navigate('Home');
         })
             .catch((error) => {
+                console.log({ error });
                 alert(eror.message);
             })
     }

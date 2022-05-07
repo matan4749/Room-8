@@ -49,7 +49,7 @@ const HomeScreen = () => {
   };
 
   async function getAprtments() {
-    let docSnap = await getDocs(collection(db, "Aprment"));
+    let docSnap = await getDocs(collection(db, "apartments"));
     let newArr = Aprment;
     docSnap.forEach((doc) => {
       if (user.favs) {

@@ -20,6 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native-web";
 import { AppContext } from "../contexts/appContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { userService } from "../services/userService";
 
 const AuthContext = createContext({});
 
@@ -44,7 +45,10 @@ export function AuthProvider({ children }) {
     () =>
       onAuthStateChanged(auth, async (user) => {
         if (user) {
-          setUser(user);
+          console.log({ user });
+          const res = await userService.getByEmail(user.email)
+          console.log({ res });
+          setUser(res);
         } else {
           setUser(null);
         }
@@ -109,7 +113,7 @@ export function AuthProvider({ children }) {
     return <View>
       <TouchableOpacity
         style={styles.menuItem}
-        onPress={() => navigation.navigate('MyApratments')}>
+        onPress={() => navigation.navigate('MyApratment')}>
         <Text style={styles.menuText}>my apartments</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -119,7 +123,7 @@ export function AuthProvider({ children }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.menuItem}
-      // onPress={logout}
+      onPress={logout}
       >
         <Text style={styles.menuText}>logout</Text>
       </TouchableOpacity>
