@@ -37,13 +37,16 @@ const AddApartment = ({ route }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const newAprtment = route.params.apartment
+    const newAprtment = route?.params?.apartment
     console.log({ newAprtment });
-    setRent(newAprtment.Rent)
-    setRooms(newAprtment.Rooms)
-    setNumberOfPartners(newAprtment.NumberOfPartners)
-    setAddress(newAprtment.Address)
-    setImage(newAprtment.photoURL)
+    if (newAprtment) {
+      setRent(newAprtment.Rent)
+      setRooms(newAprtment.Rooms)
+      setNumberOfPartners(newAprtment.NumberOfPartners)
+      setAddress(newAprtment.Address)
+      setImage(newAprtment.photoURL)
+    }
+
   }, [])
 
 

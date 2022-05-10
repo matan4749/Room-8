@@ -2,7 +2,7 @@ import { db } from "../firebase";
 import { collection, setDoc, doc, getDocs } from "firebase/firestore";
 import { apartmentService } from "./apartmentService";
 export const userService = {
-  createUser, addFav, getByEmail
+  createUser, addFav, getByEmail,
 };
 
 async function createUser(user) {

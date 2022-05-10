@@ -6,6 +6,7 @@ import { db } from "../firebase";
 import useAuth from "../hooks/useAuth";
 import tw from "tailwind-rn";
 import { useNavigation } from "@react-navigation/native";
+import { apartmentService } from "../services/apartmentService";
 function MyApratment() {
   const { user } = useAuth();
   const [apartment, setApartment] = useState();
@@ -16,14 +17,8 @@ function MyApratment() {
   }, []);
 
   const loadApartment = async () => {
-    let docs = await getDocs(collection(db, "apartments"));
-    docs.forEach((doc) => {
-      if (user.email === doc.id) {
-        setApartment({ ...doc.data(), id: doc.id });
-      } else {
-        setApartment(null);
-      }
-    });
+    const myApratment = await apartmentService.getMyApartment(user)
+    setApartment(myApratment)
   };
 
   const removeApartment = async () => {
@@ -31,7 +26,9 @@ function MyApratment() {
     loadApartment();
   };
   const editApartment = async () => {
-    navigation.navigate("addAprment");
+    navigation.navigate("addAprment", {
+      apartment
+    });
   };
   return (
     <View>

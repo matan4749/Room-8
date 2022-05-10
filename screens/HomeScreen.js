@@ -19,6 +19,7 @@ import tw from "tailwind-rn";
 import FilterScreen from "./FilterScreen";
 import { AppContext } from "../contexts/appContext";
 import { userService } from "../services/userService";
+import { apartmentService } from "../services/apartmentService";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
@@ -51,7 +52,7 @@ const HomeScreen = () => {
   async function getAprtments() {
     let docSnap = await getDocs(collection(db, "apartments"));
     let newArr = Aprment;
-   console.log({docSnap});
+    console.log({ docSnap });
     docSnap.forEach((doc) => {
       if (user.favs) {
         const found = user.favs.find((fav) => fav.id === doc.id);
@@ -66,6 +67,17 @@ const HomeScreen = () => {
     setFilteredItems(newArr);
   }
 
+
+  const handleNavEdit = () => {
+    const apartment = apartmentService.getMyApartment(user)
+    if (apartment) {
+      navigation.navigate("MyApratment")
+    } else {
+      navigation.navigate("addAprment")
+    }
+
+  }
+
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
       <View style={styles.header}>
@@ -77,12 +89,14 @@ const HomeScreen = () => {
               <Image
                 style={tw("h-10 w-10 rounded-full")}
                 source={{ uri: user.photoURL }}
-                //source={require("../user.png")}
+              //source={require("../user.png")}
               />
             </TouchableOpacity>
           </View>
         )}
-        <TouchableOpacity onPress={() => navigation.navigate("addAprment")}>
+        <TouchableOpacity onPress={() => {
+          handleNavEdit()
+        }}>
           <Image style={tw("h-14 w-14")} source={require("../logo.png")} />
         </TouchableOpacity>
 
