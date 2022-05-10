@@ -5,12 +5,17 @@ import {
   Text,
   TouchableOpacity,
   View,
+  CheckBox,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 const FilterScreen = ({ closeModal }) => {
   const [filterBy, setFilterBy] = useState({
     rooms: "",
     isAnimals: "", //  '', yes, no
+    isSmokersOpts: "",
+    isstudent: "",
+    Sabbath: "",
+    iskosher: "",
     roomates: "",
   });
   const roomsOpts = [
@@ -49,6 +54,62 @@ const FilterScreen = ({ closeModal }) => {
       value: "no",
     },
   ];
+  const isSmokersOpts = [
+    {
+      label: "all",
+      value: "",
+    },
+    {
+      label: "yes",
+      value: "yes",
+    },
+    {
+      label: "no",
+      value: "no",
+    },
+  ];
+  const setIsStudent = [
+    {
+      label: "all",
+      value: "",
+    },
+    {
+      label: "yes",
+      value: "yes",
+    },
+    {
+      label: "no",
+      value: "no",
+    },
+  ];
+  const setSabbath = [
+    {
+      label: "all",
+      value: "",
+    },
+    {
+      label: "yes",
+      value: "yes",
+    },
+    {
+      label: "no",
+      value: "no",
+    },
+  ];
+  const setiskosher = [
+    {
+      label: "all",
+      value: "",
+    },
+    {
+      label: "yes",
+      value: "yes",
+    },
+    {
+      label: "no",
+      value: "no",
+    },
+  ];
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -58,25 +119,63 @@ const FilterScreen = ({ closeModal }) => {
       >
         <Text>X</Text>
       </TouchableOpacity>
-      <View>
-        <RNPickerSelect
-          items={roomsOpts}
-          onValueChange={(value) => setFilterBy({ ...filterBy, rooms: value })}
-        />
-        <RNPickerSelect
-          items={isAnimalsOpts}
-          onValueChange={(value) =>
-            setFilterBy({ ...filterBy, isAnimals: value })
-          }
-        />
+      <View style={styles.container}>
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={isAnimals}
+            onValueChange={isAnimalsOpts}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>בעלי חיים בדירה</Text>
+        </View>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={isSmokers}
+            onValueChange={isSmokersOpts}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>מעשנים בדירה</Text>
+        </View>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={isstudent}
+            onValueChange={setIsStudent}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>סטודנטים</Text>
+        </View>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={Sabbath}
+            onValueChange={setSabbath}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>שומרים שבת</Text>
+        </View>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={iskosher}
+            onValueChange={setiskosher}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>כשר</Text>
+        </View>
+      </View>
 
-        {/* <CheckBox
+      {/* <CheckBox
           value={filterBy.isAnimals}
           onValueChange={() =>
             setFilterBy({ ...filterBy, isAnimals: !filterBy.isAnimals })
           }
         /> */}
-      </View>
     </KeyboardAvoidingView>
   );
 };

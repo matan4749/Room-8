@@ -37,15 +37,14 @@ const AddApartment = ({ route }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const newAprtment = route.params.apartment
+    const newAprtment = route.params.apartment;
     console.log({ newAprtment });
-    setRent(newAprtment.Rent)
-    setRooms(newAprtment.Rooms)
-    setNumberOfPartners(newAprtment.NumberOfPartners)
-    setAddress(newAprtment.Address)
-    setImage(newAprtment.photoURL)
-  }, [])
-
+    setRent(newAprtment.Rent);
+    setRooms(newAprtment.Rooms);
+    setNumberOfPartners(newAprtment.NumberOfPartners);
+    setAddress(newAprtment.Address);
+    setImage(newAprtment.photoURL);
+  }, []);
 
   const BuildAprtment = () => {
     setDoc(doc(db, "apartments", route.params?.apartment?.id || user.email), {
@@ -60,7 +59,7 @@ const AddApartment = ({ route }) => {
       isAnimals: isAnimals,
     })
       .then(() => {
-        navigation.navigate("Home");
+        navigation.navigate("AdminHome");
       })
       .catch((error) => {
         console.log({ error });
