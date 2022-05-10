@@ -63,7 +63,7 @@ const AddApartment = ({ route }) => {
       isAnimals: isAnimals,
     })
       .then(() => {
-        navigation.navigate("Home");
+        navigation.navigate("AdminHome");
       })
       .catch((error) => {
         console.log({ error });

@@ -25,7 +25,7 @@ const StackNavigator = () => {
     >
       {user ? (
         <>
-          {user.email === "adipelsed499@gmail.com" && (
+          {user.email === "matan4749x@gmail.com" && (
             <>
               <Stack.Group>
                 <Stack.Screen name="Admin" component={AdminHome} />
