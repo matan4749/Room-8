@@ -9,6 +9,9 @@ import SignUpScreen from "./screens/SignUpScreen";
 import FilterScreen from "./screens/FilterScreen";
 import Favorites from "./screens/Favorites";
 import MyApratment from "./screens/MyApratment";
+import Users from "./Admin/Users";
+import AdminHome from "./Admin/AdminHome";
+import UserApartments from "./Admin/UserApartments";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -22,6 +25,20 @@ const StackNavigator = () => {
     >
       {user ? (
         <>
+          {user.email === "matan4749@gmail.com" && (
+            <>
+              <Stack.Group>
+                <Stack.Screen name="Admin" component={AdminHome} />
+
+                <Stack.Screen
+                  name="UserApartments"
+                  component={UserApartments}
+                />
+
+                <Stack.Screen name="Users" component={Users} />
+              </Stack.Group>
+            </>
+          )}
           <Stack.Group>
             <Stack.Screen name="Home" component={HomeScreen} />
 

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import * as Google from "expo-google-app-auth";
-import SideMenu from 'react-native-side-menu-updated'
+import SideMenu from "react-native-side-menu-updated";
 
 import { auth } from "../firebase";
 import {
@@ -17,10 +17,11 @@ import {
 } from "@firebase/auth";
 import * as RootNavigation from "../RootNavigation";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, View } from "react-native-web";
+import { StyleSheet, Text, View, Image } from "react-native-web";
 import { AppContext } from "../contexts/appContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { userService } from "../services/userService";
+import tw from "tailwind-rn";
 
 const AuthContext = createContext({});
 
@@ -46,7 +47,7 @@ export function AuthProvider({ children }) {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           console.log({ user });
-          const res = await userService.getByEmail(user.email)
+          const res = await userService.getByEmail(user.email);
           console.log({ res });
           setUser(res);
         } else {
@@ -110,44 +111,51 @@ export function AuthProvider({ children }) {
 
   const Menu = () => {
     console.log({ navigation });
-    return <View>
-      <TouchableOpacity
-        style={styles.menuItem}
-        onPress={() => navigation.navigate('MyApratment')}>
-        <Text style={styles.menuText}>my apartments</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.menuItem}
-        onPress={() => navigation.navigate('Favorites')}>
-        <Text style={styles.menuText}>favorites</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.menuItem}
-      onPress={logout}
-      >
-        <Text style={styles.menuText}>logout</Text>
-      </TouchableOpacity>
-    </View>
-  }
+    return (
+      <View>
+        {/* <Image
+                style={tw("h-10 w-10 rounded-full")}
+                source={{ uri: user.photoURL }}
+              /> */}
+        {/* <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          שלום {user.displayName}❤️
+        </Text> */}
+        <Text style={styles.menuText}>הדירה שלי</Text>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("MyApratment")}
+        >
+          <Image style={tw("h-10 w-10")} source={require("../house.png")} />
+        </TouchableOpacity>
+        <Text style={styles.menuText}>מועדפים</Text>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("Favorites")}
+        >
+          <Image style={tw("h-10 w-10")} source={require("../home.png")} />
+        </TouchableOpacity>
+        <Text style={styles.menuText}>התנתקות</Text>
+        <TouchableOpacity style={styles.menuItem} onPress={logout}>
+          <Image style={tw("h-10 w-10")} source={require("../logout.png")} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
   return (
-    <AppContext.Provider value={{
-      showMenu, toggleMenu: setShowMenu
-    }}>
-      <SideMenu
-        isOpen={showMenu}
-        disableGestures={true}
-        menu={<Menu />}>
-
+    <AppContext.Provider
+      value={{
+        showMenu,
+        toggleMenu: setShowMenu,
+      }}
+    >
+      <SideMenu isOpen={showMenu} disableGestures={true} menu={<Menu />}>
         <AuthContext.Provider value={memoedValue}>
           {!loadingInitial && children}
         </AuthContext.Provider>
-
       </SideMenu>
     </AppContext.Provider>
-
-
   );
 }
 
@@ -158,10 +166,6 @@ export default function useAuth() {
 }
 
 const styles = StyleSheet.create({
-  menuItem: {
-
-  },
-  menuText: {
-
-  }
-})
+  menuItem: {},
+  menuText: {},
+});

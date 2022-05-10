@@ -29,7 +29,7 @@ const HomeScreen = () => {
   const context = useContext(AppContext);
 
   useEffect(() => {
-      getAprtments();
+    getAprtments();
   }, []);
 
   const filterItems = (filterBy) => {
@@ -53,16 +53,12 @@ const HomeScreen = () => {
     let newArr = Aprment;
     docSnap.forEach((doc) => {
       if (user.favs) {
-        const found = user.favs.find(fav =>
-          fav.id === doc.id
-        )
-        console.log({found});
-        if (!found)
-          newArr.push({ ...doc.data(), id: doc.id });
+        const found = user.favs.find((fav) => fav.id === doc.id);
+        console.log({ found });
+        if (!found) newArr.push({ ...doc.data(), id: doc.id });
       } else {
         newArr.push({ ...doc.data(), id: doc.id });
       }
-
     });
     console.log({ newArr });
     setAprment(newArr);
@@ -73,21 +69,18 @@ const HomeScreen = () => {
     <SafeAreaView style={tw("flex-1 relative")}>
       <View style={styles.header}>
         {Aprment && (
-          <View style={{ position: 'relative' }}>
+          <View style={{ position: "relative" }}>
             <TouchableOpacity
               onPress={() => context.toggleMenu(!context.showMenu)}
             >
               <Image
                 style={tw("h-10 w-10 rounded-full")}
                 source={{ uri: user.photoURL }}
-              //source={require("../user.png")}
+                //source={require("../user.png")}
               />
             </TouchableOpacity>
           </View>
         )}
-
-
-
         <TouchableOpacity onPress={() => navigation.navigate("addAprment")}>
           <Image style={tw("h-14 w-14")} source={require("../logo.png")} />
         </TouchableOpacity>
@@ -184,13 +177,12 @@ const HomeScreen = () => {
             onSwipedLeft={(cardIndex) => {
               console.log("Swipe PASS--", cardIndex);
               // swipeLeft(cardIndex);
-
             }}
             onSwipedRight={(cardIndex) => {
-              console.log("Swipe MATCH", cardIndex)
+              console.log("Swipe MATCH", cardIndex);
 
               //swipeRight(cardIndex);
-              userService.addFav(user, filteredItems[cardIndex])
+              userService.addFav(user, filteredItems[cardIndex]);
             }}
             cardIndex={0}
             backgroundColor={"#4FD0E9"}
@@ -241,16 +233,16 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   menuItem: {
     height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomColor: 'black',
-    borderWidth: 1
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomColor: "black",
+    borderWidth: 1,
   },
   cardShadow: {
     shadowColor: "#000",
