@@ -34,9 +34,9 @@ const HomeScreen = () => {
   }, []);
 
   const filterItems = (filterBy) => {
-    let copy = filteredItems;
-    if (filterBy.rooms) {
-      copy = Aprment.filter((item) => item.Rooms == filterBy.rooms);
+    let copy = [...Aprment];
+    if (filterBy.Rooms) {
+      copy = copy.filter((item) => item.Rooms == filterBy.Rooms);
     }
     if (filterBy.roomates) {
       copy = copy.filter((item) => item.roomates == filterBy.roomates);
@@ -45,6 +45,21 @@ const HomeScreen = () => {
       copy = copy.filter((item) => item.isAnimals);
     } else if (filterBy.isAnimals === "no") {
       copy = copy.filter((item) => !item.isAnimals);
+    }
+    if (filterBy.isSmokers === "yes") {
+      copy = copy.filter((item) => item.isSmokers);
+    } else if (filterBy.isSmokers === "no") {
+      copy = copy.filter((item) => !item.isSmokers);
+    }
+    if (filterBy.Sabbath === "yes") {
+      copy = copy.filter((item) => item.Sabbath);
+    } else if (filterBy.Sabbath === "no") {
+      copy = copy.filter((item) => !item.Sabbath);
+    }
+    if (filterBy.isstudent === "yes") {
+      copy = copy.filter((item) => item.isstudent);
+    } else if (filterBy.isstudent === "no") {
+      copy = copy.filter((item) => !item.isstudent);
     }
     setFilteredItems(copy);
   };
@@ -62,7 +77,6 @@ const HomeScreen = () => {
         newArr.push({ ...doc.data(), id: doc.id });
       }
     });
-    console.log({ newArr });
     setAprment(newArr);
     setFilteredItems(newArr);
   }
@@ -156,11 +170,19 @@ const HomeScreen = () => {
                     )}
                   >
                     <View>
-                      <Text style={tw("text-lg font-bold")}>
+                      <Text >
                         מספר שותפים: {card?.NumberOfPartners}
                       </Text>
                       <Text> בעלי חיים:{card?.isAnimals ? "יש" : "אין"}</Text>
-                      <Text>מספר חדרים:{card?.Rooms}</Text>
+                    </View>
+
+                    < View  >
+                      <Text> חדרים:{card?.Rooms}</Text>
+                      <Text> שבת:{card?.Sabbath ? "יש" : "אין"}</Text>
+                    </ View  >
+                    <View>
+                      <Text> מעשנים:{card?.isSmokers ? "יש" : "אין"}</Text>
+                      <Text> סטודרנטים:{card?.isstudent ? "יש" : "אין"}</Text>
                     </View>
                     <Text style={tw("text-2xl font-bold")}>
                       {card?.Address}
@@ -203,8 +225,9 @@ const HomeScreen = () => {
             backgroundColor={"#4FD0E9"}
             stackSize={5}
           ></Swiper>
-        )}
-      </View>
+        )
+        }
+      </View >
       <View style={tw("flex flex-row justify-evenly")}>
         <TouchableOpacity
           onPress={() => swipeRef.current.swipeLeft()}
@@ -240,7 +263,7 @@ const HomeScreen = () => {
       </View>
 
       <StatusBar style="auto" />
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 

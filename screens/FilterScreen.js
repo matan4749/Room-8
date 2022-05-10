@@ -10,13 +10,13 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 const FilterScreen = ({ closeModal }) => {
   const [filterBy, setFilterBy] = useState({
-    rooms: "",
-    isAnimals: "", //  '', yes, no
-    isSmokersOpts: "",
-    isstudent: "",
-    Sabbath: "",
-    iskosher: "",
-    roomates: "",
+    rooms: false,
+    isAnimals: false, //  '', yes, no
+    isSmokersOpts: false,
+    isstudent: false,
+    Sabbath: false,
+    iskosher: false,
+    roomates: false,
   });
   const roomsOpts = [
     {
@@ -68,7 +68,7 @@ const FilterScreen = ({ closeModal }) => {
       value: "no",
     },
   ];
-  const setIsStudent = [
+  const studentOpts = [
     {
       label: "all",
       value: "",
@@ -82,7 +82,7 @@ const FilterScreen = ({ closeModal }) => {
       value: "no",
     },
   ];
-  const setSabbath = [
+  const sabastOpts = [
     {
       label: "all",
       value: "",
@@ -96,20 +96,20 @@ const FilterScreen = ({ closeModal }) => {
       value: "no",
     },
   ];
-  const setiskosher = [
-    {
-      label: "all",
-      value: "",
-    },
-    {
-      label: "yes",
-      value: "yes",
-    },
-    {
-      label: "no",
-      value: "no",
-    },
-  ];
+  // const koserOpts = [
+  //   {
+  //     label: "all",
+  //     value: "",
+  //   },
+  //   {
+  //     label: "yes",
+  //     value: "yes",
+  //   },
+  //   {
+  //     label: "no",
+  //     value: "no",
+  //   },
+  // ];
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -119,11 +119,56 @@ const FilterScreen = ({ closeModal }) => {
       >
         <Text>X</Text>
       </TouchableOpacity>
-      <View style={styles.container}>
+      <View >
+        <Text>is animals</Text>
+        <RNPickerSelect
+          onValueChange={(value) =>
+            setFilterBy({ ...filterBy, isAnimals: value })}
+          items={isAnimalsOpts}
+        />
+        <Text>is Rooms</Text>
+
+        <RNPickerSelect
+          onValueChange={(value) =>
+            setFilterBy({ ...filterBy, Rooms: value })}
+          items={roomsOpts}
+        />
+        <Text>is isSmokers</Text>
+
+        <RNPickerSelect
+          onValueChange={(value) =>
+            setFilterBy({ ...filterBy, isSmokers: value })}
+          items={isSmokersOpts}
+        />
+        <Text>is isstudent</Text>
+
+        <RNPickerSelect
+          onValueChange={(value) =>
+            setFilterBy({ ...filterBy, isstudent: value })}
+          items={studentOpts}
+        />
+        <Text>is Sabbath</Text>
+
+        <RNPickerSelect
+          onValueChange={(value) =>
+            setFilterBy({ ...filterBy, Sabbath: value })}
+          items={sabastOpts}
+        />
+      </View>
+
+      {/* <Text>is iskosher</Text> */}
+
+      {/* <RNPickerSelect
+        onValueChange={(value) =>
+          setFilterBy({ ...filterBy, iskosher: value })}
+        items={koserOpts}
+      /> */}
+      {/* <View style={styles.container}>
         <View style={styles.checkboxContainer}>
           <CheckBox
-            value={isAnimals}
-            onValueChange={isAnimalsOpts}
+            value={filterBy.isAnimals}
+            onValueChange={() =>
+              setFilterBy({ ...filterBy, isAnimals: !filterBy.isAnimals })}
             style={styles.checkbox}
           />
           <Text style={styles.label}>בעלי חיים בדירה</Text>
@@ -132,8 +177,9 @@ const FilterScreen = ({ closeModal }) => {
       <View style={styles.container}>
         <View style={styles.checkboxContainer}>
           <CheckBox
-            value={isSmokers}
-            onValueChange={isSmokersOpts}
+            value={filterBy.isSmokers}
+            onValueChange={() =>
+              setFilterBy({ ...filterBy, isSmokers: !filterBy.isSmokers })}
             style={styles.checkbox}
           />
           <Text style={styles.label}>מעשנים בדירה</Text>
@@ -142,8 +188,9 @@ const FilterScreen = ({ closeModal }) => {
       <View style={styles.container}>
         <View style={styles.checkboxContainer}>
           <CheckBox
-            value={isstudent}
-            onValueChange={setIsStudent}
+            value={filterBy.isstudent}
+            onValueChange={() =>
+              setFilterBy({ ...filterBy, isstudent: !filterBy.isstudent })}
             style={styles.checkbox}
           />
           <Text style={styles.label}>סטודנטים</Text>
@@ -152,8 +199,9 @@ const FilterScreen = ({ closeModal }) => {
       <View style={styles.container}>
         <View style={styles.checkboxContainer}>
           <CheckBox
-            value={Sabbath}
-            onValueChange={setSabbath}
+            value={filterBy.Sabbath}
+            onValueChange={() =>
+              setFilterBy({ ...filterBy, Sabbath: !filterBy.Sabbath })}
             style={styles.checkbox}
           />
           <Text style={styles.label}>שומרים שבת</Text>
@@ -162,13 +210,14 @@ const FilterScreen = ({ closeModal }) => {
       <View style={styles.container}>
         <View style={styles.checkboxContainer}>
           <CheckBox
-            value={iskosher}
-            onValueChange={setiskosher}
+            value={filterBy.iskosher}
+            onValueChange={() =>
+              setFilterBy({ ...filterBy, iskosher: !filterBy.iskosher })}
             style={styles.checkbox}
           />
           <Text style={styles.label}>כשר</Text>
         </View>
-      </View>
+      </View> */}
 
       {/* <CheckBox
           value={filterBy.isAnimals}
