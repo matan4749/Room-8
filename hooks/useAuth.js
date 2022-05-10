@@ -110,16 +110,18 @@ export function AuthProvider({ children }) {
   );
 
   const Menu = () => {
-    console.log({ navigation });
+    console.log({ navigation, user });
     return (
       <View>
-        {/* <Image
-                style={tw("h-10 w-10 rounded-full")}
-                source={{ uri: user.photoURL }}
-              /> */}
-        {/* <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
-          שלום {user.displayName}❤️
-        </Text> */}
+        {user && <>
+          <Image
+            style={tw("h-10 w-10 rounded-full")}
+            source={{ uri: user.photoURL }}
+          />
+          <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+            שלום {user.displayName}❤️
+          </Text>
+        </>}
         <Text style={styles.menuText}>הדירה שלי</Text>
         <TouchableOpacity
           style={styles.menuItem}

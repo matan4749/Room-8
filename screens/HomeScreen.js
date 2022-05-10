@@ -51,6 +51,7 @@ const HomeScreen = () => {
   async function getAprtments() {
     let docSnap = await getDocs(collection(db, "apartments"));
     let newArr = Aprment;
+   console.log({docSnap});
     docSnap.forEach((doc) => {
       if (user.favs) {
         const found = user.favs.find((fav) => fav.id === doc.id);

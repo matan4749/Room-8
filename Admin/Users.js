@@ -3,47 +3,65 @@ import React, { useEffect, useState } from "react";
 import { Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-web";
 import { db } from "../firebase";
-import useAuth from "../hooks/useAuth";
-import { useNavigation } from "@react-navigation/native";
 import tw from "tailwind-rn";
 function Users() {
-  const { user } = useAuth();
-  const [apartment, setApartment] = useState();
-  const navigation = useNavigation();
-  console.log({ apartment });
+  const [users, setUsers] = useState();
   useEffect(() => {
     loadUsers();
   }, []);
 
   const loadUsers = async () => {
     let docs = await getDocs(collection(db, "users"));
+    let users = []
     docs.forEach((doc) => {
-      setApartment({ ...doc.data(), id: doc.id });
+      users.push({ ...doc.data(), id: doc.id })
     });
+    setUsers(users)
   };
 
-  const removeUsers = async () => {
-    await deleteDoc(doc(db, "users", email.id));
+
+  // function getUser(uid) {
+  //   getAuth()
+  //     .getUser(uid)
+  //     .then((userRecord) => {
+  //       // See the UserRecord reference doc for the contents of userRecord.
+  //       console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error fetching user data:', error);
+  //     });
+  // }
+  const removeUsers = async (user) => {
+    console.log({ user });
+    // getUser(user.uid)
+    await deleteDoc(doc(db, "users", user.email));
+    // deleteUser(user).then(() => {
+    //   console.log('deleteddd');
+    // }).catch((err => {
+    //   console.log({ err });
+    // }))
     loadUsers();
   };
 
   return (
     <View>
       <Text>Users</Text>
-      {apartment && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Image
-            source={{ uri: user.photoURL }}
-            style={{ height: 100, width: 100 }}
-          />
-          <View>
-            <Text> name: {user.name}</Text>
-            <Text> email: {user.email}</Text>
+      {users && (
+        users.map(u => {
+          return <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              source={{ uri: u.photoURL }}
+              style={{ height: 100, width: 100 }}
+            />
+            <View>
+              <Text> name: {u.name}</Text>
+              <Text> email: {u.email}</Text>
+            </View>
+            <TouchableOpacity onPress={() => removeUsers(u)}>
+              <Image style={tw("h-7 w-7")} source={require("../delete.png")} />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={removeUsers}>
-            <Image style={tw("h-7 w-7")} source={require("../delete.png")} />
-          </TouchableOpacity>
-        </View>
+        })
       )}
     </View>
   );

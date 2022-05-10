@@ -5,25 +5,42 @@ import { TouchableOpacity } from "react-native-web";
 import { db } from "../firebase";
 import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
+import tw from "tailwind-rn";
 function UserApartments() {
   const { user } = useAuth();
-  const [apartment, setApartment] = useState();
+  const [apartments, setApartments] = useState([]);
   const navigation = useNavigation();
-  console.log({ apartment });
 
-  const removeApartment = async () => {
+  useEffect(() => {
+    loadApratments()
+  }, [])
+
+
+  const loadApratments = async () => {
+    let docSnap = await getDocs(collection(db, "apartments"));
+    let newArr = [];
+    console.log({ docSnap });
+    docSnap.forEach((doc) => {
+      newArr.push({ ...doc.data(), id: doc.id });
+    });
+    setApartments(newArr);
+  }
+
+  const removeApartment = async (apartment) => {
     await deleteDoc(doc(db, "apartments", apartment.id));
-    loadApartment();
+    loadApratments();
   };
-  const editApartment = async () => {
-    navigation.navigate("addAprment");
+  const editApartment = async (apartment) => {
+    navigation.navigate("addAprment",{apartment});
   };
+
+
 
   return (
     <View>
       <Text>User Apartments</Text>
       <FlatList
-        data={user.favs || []}
+        data={apartments}
         renderItem={({ item }) => {
           return (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -37,6 +54,12 @@ function UserApartments() {
                 <Text> rent:{item.Rent}</Text>
                 <Text> animals:{item.isAnimals ? "yes" : "no"}</Text>
               </View>
+              <TouchableOpacity onPress={() => removeApartment(item)}>
+                <Image style={tw("h-7 w-7")} source={require("../delete.png")} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => editApartment(item)}>
+                <Image style={tw("h-7 w-7")} source={require("../edit.png")} />
+              </TouchableOpacity>
             </View>
           );
         }}

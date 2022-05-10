@@ -19,7 +19,7 @@ import { db } from "../firebase";
 import * as ImagePicker from "expo-image-picker";
 import tw from "tailwind-rn";
 
-const AddApartment = () => {
+const AddApartment = ({ route }) => {
   const [Address, setAddress] = useState(null);
   const [Rooms, setRooms] = useState(null);
   const [Rent, setRent] = useState(null);
@@ -36,9 +36,19 @@ const AddApartment = () => {
 
   const navigation = useNavigation();
 
-  async function handleBuildingPartment() {}
+  useEffect(() => {
+    const newAprtment = route.params.apartment
+    console.log({ newAprtment });
+    setRent(newAprtment.Rent)
+    setRooms(newAprtment.Rooms)
+    setNumberOfPartners(newAprtment.NumberOfPartners)
+    setAddress(newAprtment.Address)
+    setImage(newAprtment.photoURL)
+  }, [])
+
+
   const BuildAprtment = () => {
-    setDoc(doc(db, "apartments", user.email), {
+    setDoc(doc(db, "apartments", route.params?.apartment?.id || user.email), {
       Address: Address,
       Rooms: Rooms,
       Rent: Rent,
