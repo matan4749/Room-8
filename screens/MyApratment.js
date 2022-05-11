@@ -1,7 +1,7 @@
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Text, View, Image } from "react-native";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 import { db } from "../firebase";
 import useAuth from "../hooks/useAuth";
 import tw from "tailwind-rn";
@@ -17,8 +17,8 @@ function MyApratment() {
   }, []);
 
   const loadApartment = async () => {
-    const myApratment = await apartmentService.getMyApartment(user)
-    setApartment(myApratment)
+    const myApratment = await apartmentService.getMyApartment(user);
+    setApartment(myApratment);
   };
 
   const removeApartment = async () => {
@@ -27,7 +27,7 @@ function MyApratment() {
   };
   const editApartment = async () => {
     navigation.navigate("addAprment", {
-      apartment
+      apartment,
     });
   };
   return (
@@ -40,10 +40,13 @@ function MyApratment() {
             style={{ height: 100, width: 100 }}
           />
           <View>
-            <Text> address:{apartment.Address}</Text>
-            <Text> rooms:{apartment.Rooms}</Text>
-            <Text> rent:{apartment.Rent}</Text>
-            <Text> animals:{apartment.isAnimals ? "yes" : "no"}</Text>
+            <Text> כתובת:{apartment.Address}</Text>
+            <Text> מספר חדרים:{apartment.Rooms}</Text>
+            <Text> שכירות:{apartment.Rent}</Text>
+            <Text> מספר שותפים:{apartment.NumberOfPartners ? "✅" : "❎"}</Text>
+            <Text>שומרים שבת:{apartment.Sabbath ? "✅" : "❎"}</Text>
+            <Text> סטודנטים:{apartment.isstudent ? "✅" : "❎"}</Text>
+            <Text> מעשנים:{apartment.isSmokers ? "✅" : "❎"}</Text>
           </View>
           <TouchableOpacity onPress={editApartment}>
             <Image style={tw("h-7 w-7")} source={require("../edit.png")} />

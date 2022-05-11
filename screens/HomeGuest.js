@@ -20,17 +20,17 @@ import FilterScreen from "./FilterScreen";
 import { AppContext } from "../contexts/appContext";
 import { userService } from "../services/userService";
 import { apartmentService } from "../services/apartmentService";
-const HomeScreen = () => {
+const HomeGuest = () => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
-  const [Aprment, setAprment] = useState([]);
+  const [apartments, setApartments] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const swipeRef = useRef(null);
   const [showFilter, setShowFilter] = useState(false);
   const context = useContext(AppContext);
 
   useEffect(() => {
-    getAprtments();
+    loadApratments();
   }, []);
 
   const filterItems = (filterBy) => {
@@ -64,68 +64,32 @@ const HomeScreen = () => {
     setFilteredItems(copy);
   };
 
-  async function getAprtments() {
+  const loadApratments = async () => {
     let docSnap = await getDocs(collection(db, "apartments"));
-    let newArr = Aprment;
+    let newArr = apartments;
     console.log({ docSnap });
     docSnap.forEach((doc) => {
-      if (user.favs) {
-        const found = user.favs.find((fav) => fav.id === doc.id);
-        console.log({ found });
-        if (!found) newArr.push({ ...doc.data(), id: doc.id });
-      } else {
-        newArr.push({ ...doc.data(), id: doc.id });
-      }
+      newArr.push({ ...doc.data(), id: doc.id });
     });
-    setAprment(newArr);
+    setApartments(newArr);
     setFilteredItems(newArr);
-  }
-
-  const handleNavEdit = () => {
-    const apartment = apartmentService.getMyApartment(user);
-    if (!apartment) {
-      navigation.navigate("MyApratment");
-    } else {
-      navigation.navigate("addAprment");
-    }
   };
 
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
       <View style={styles.header}>
-        {Aprment && (
-          <View style={{ position: "relative" }}>
-            <TouchableOpacity
-              onPress={() => context.toggleMenu(!context.showMenu)}
-            >
-              <Image
-                style={tw("h-10 w-10 rounded-full")}
-                source={{ uri: user.photoURL }}
-                //source={require("../user.png")}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-        <TouchableOpacity
-          onPress={() => {
-            handleNavEdit();
-          }}
-        >
-          <Image style={tw("h-14 w-14")} source={require("../logo.png")} />
-        </TouchableOpacity>
+        {apartments && <View style={{ position: "relative" }}></View>}
 
-        <TouchableOpacity>
-          <Ionicons
-            onPress={() => navigation.navigate("forgotPassword")}
-            name="chatbubbles-sharp"
-            size={30}
-            color="#FF5864"
-          />
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Image style={tw("h-14 w-14")} source={require("../Singup.png")} />
+          <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+            הרשמה
+          </Text>
         </TouchableOpacity>
       </View>
 
       <View style={tw("flex-1  -mt-6")}>
-        {Aprment && (
+        {apartments && (
           <Swiper
             ref={swipeRef}
             containerStyle={{ backgroundColor: "transparent" }}
@@ -182,7 +146,7 @@ const HomeScreen = () => {
                       <Text> מעשנים: {card?.isSmokers ? "✅" : "❎"}</Text>
                       <Text> סטודרנטים: {card?.isstudent ? "✅" : "❎"}</Text>
                     </View>
-                    <Text style={tw("text-1xl font-bold")}>
+                    <Text style={tw("text-2xl font-bold")}>
                       {card?.Address}
                     </Text>
                   </View>
@@ -217,7 +181,7 @@ const HomeScreen = () => {
               console.log("Swipe MATCH", cardIndex);
 
               //swipeRight(cardIndex);
-              userService.addFav(user, filteredItems[cardIndex]);
+              //userService.addFav(user, filteredItems[cardIndex]);
             }}
             cardIndex={0}
             backgroundColor={"#4FD0E9"}
@@ -245,18 +209,6 @@ const HomeScreen = () => {
         >
           <AntDesign name="heart" size={24} color="green" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
-          <Image style={tw("h-14 w-14")} source={require("../filter.png")} />
-        </TouchableOpacity>
-        <Modal animatiomnType="slide" visible={showFilter}>
-          <FilterScreen
-            closeModal={(filterBy) => {
-              console.log("heree");
-              filterItems(filterBy);
-              setShowFilter(false);
-            }}
-          />
-        </Modal>
       </View>
 
       <StatusBar style="auto" />
@@ -264,7 +216,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default HomeGuest;
 
 const styles = StyleSheet.create({
   header: {

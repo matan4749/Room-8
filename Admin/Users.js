@@ -1,7 +1,7 @@
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Text, View, Image } from "react-native";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 import { db } from "../firebase";
 import tw from "tailwind-rn";
 function Users() {
@@ -12,13 +12,12 @@ function Users() {
 
   const loadUsers = async () => {
     let docs = await getDocs(collection(db, "users"));
-    let users = []
+    let users = [];
     docs.forEach((doc) => {
-      users.push({ ...doc.data(), id: doc.id })
+      users.push({ ...doc.data(), id: doc.id });
     });
-    setUsers(users)
+    setUsers(users);
   };
-
 
   // function getUser(uid) {
   //   getAuth()
@@ -46,23 +45,27 @@ function Users() {
   return (
     <View>
       <Text>Users</Text>
-      {users && (
-        users.map(u => {
-          return <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image
-              source={{ uri: u.photoURL }}
-              style={{ height: 100, width: 100 }}
-            />
-            <View>
-              <Text> name: {u.name}</Text>
-              <Text> email: {u.email}</Text>
+      {users &&
+        users.map((u) => {
+          return (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image
+                source={{ uri: u.photoURL }}
+                style={{ height: 100, width: 100 }}
+              />
+              <View>
+                <Text> name: {u.name}</Text>
+                <Text> email: {u.email}</Text>
+              </View>
+              <TouchableOpacity onPress={() => removeUsers(u)}>
+                <Image
+                  style={tw("h-7 w-7")}
+                  source={require("../delete.png")}
+                />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => removeUsers(u)}>
-              <Image style={tw("h-7 w-7")} source={require("../delete.png")} />
-            </TouchableOpacity>
-          </View>
-        })
-      )}
+          );
+        })}
     </View>
   );
 }

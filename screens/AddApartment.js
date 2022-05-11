@@ -37,18 +37,16 @@ const AddApartment = ({ route }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const newAprtment = route?.params?.apartment
+    const newAprtment = route?.params?.apartment;
     console.log({ newAprtment });
     if (newAprtment) {
-      setRent(newAprtment.Rent)
-      setRooms(newAprtment.Rooms)
-      setNumberOfPartners(newAprtment.NumberOfPartners)
-      setAddress(newAprtment.Address)
-      setImage(newAprtment.photoURL)
+      setRent(newAprtment.Rent);
+      setRooms(newAprtment.Rooms);
+      setNumberOfPartners(newAprtment.NumberOfPartners);
+      setAddress(newAprtment.Address);
+      setImage(newAprtment.photoURL);
     }
-
-  }, [])
-
+  }, []);
 
   const BuildAprtment = () => {
     setDoc(doc(db, "apartments", route.params?.apartment?.id || user.email), {
@@ -63,7 +61,7 @@ const AddApartment = ({ route }) => {
       isAnimals: isAnimals,
     })
       .then(() => {
-        navigation.navigate("AdminHome");
+        navigation.navigate("Home");
       })
       .catch((error) => {
         console.log({ error });
@@ -151,43 +149,47 @@ const AddApartment = ({ route }) => {
         )}
       </View>
       <View style={styles.container}>
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={isAnimals}
-            onValueChange={setIsAnimals}
-            style={styles.checkbox}
-          />
-          <Text style={styles.label}>בעלי חיים בדירה</Text>
+        <View>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={isAnimals}
+              onValueChange={setIsAnimals}
+              style={styles.checkbox}
+            />
+            <Text style={styles.label}>בעלי חיים בדירה</Text>
+          </View>
+        </View>
+        <View style={styles.container}>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={isSmokers}
+              onValueChange={setIsSmokers}
+              style={styles.checkbox}
+            />
+            <Text style={styles.label}>מעשנים בדירה</Text>
+          </View>
         </View>
       </View>
-      <View style={styles.container}>
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={isSmokers}
-            onValueChange={setIsSmokers}
-            style={styles.checkbox}
-          />
-          <Text style={styles.label}>מעשנים בדירה</Text>
+      <View>
+        <View style={styles.container}>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={isstudent}
+              onValueChange={setIsStudent}
+              style={styles.checkbox}
+            />
+            <Text style={styles.label}>סטודנטים</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={isstudent}
-            onValueChange={setIsStudent}
-            style={styles.checkbox}
-          />
-          <Text style={styles.label}>סטודנטים</Text>
-        </View>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={Sabbath}
-            onValueChange={setSabbath}
-            style={styles.checkbox}
-          />
-          <Text style={styles.label}>שומרים שבת</Text>
+        <View style={styles.container}>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={Sabbath}
+              onValueChange={setSabbath}
+              style={styles.checkbox}
+            />
+            <Text style={styles.label}>שומרים שבת</Text>
+          </View>
         </View>
       </View>
       <View style={styles.container}>

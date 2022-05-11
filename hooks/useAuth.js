@@ -17,7 +17,7 @@ import {
 } from "@firebase/auth";
 import * as RootNavigation from "../RootNavigation";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, View, Image } from "react-native-web";
+import { StyleSheet, ImageBackground, Text, View, Image } from "react-native";
 import { AppContext } from "../contexts/appContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { userService } from "../services/userService";
@@ -113,30 +113,57 @@ export function AuthProvider({ children }) {
     console.log({ navigation, user });
     return (
       <View>
-        {user && <>
-          <Image
-            style={tw("h-10 w-10 rounded-full")}
-            source={{ uri: user.photoURL }}
-          />
+        <ImageBackground
+          source={require("../pexels.png")}
+          resizeMode="cover"
+          style={styles.image}
+        >
           <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
-            שלום {user.displayName}❤️
+            תפריט
           </Text>
-        </>}
-        <Text style={styles.menuText}>הדירה שלי</Text>
+        </ImageBackground>
+        {user && (
+          <>
+            <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+              שלום {user.name}❤️
+              <Image
+                style={tw("h-10 w-10 rounded-full")}
+                source={{ uri: user.photoURL }}
+              />
+            </Text>
+          </>
+        )}
+
+        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+          הדירה שלי
+        </Text>
         <TouchableOpacity
           style={styles.menuItem}
           onPress={() => navigation.navigate("MyApratment")}
         >
           <Image style={tw("h-10 w-10")} source={require("../house.png")} />
         </TouchableOpacity>
-        <Text style={styles.menuText}>מועדפים</Text>
+        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+          מועדפים
+        </Text>
         <TouchableOpacity
           style={styles.menuItem}
           onPress={() => navigation.navigate("Favorites")}
         >
           <Image style={tw("h-10 w-10")} source={require("../home.png")} />
         </TouchableOpacity>
-        <Text style={styles.menuText}>התנתקות</Text>
+        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+          אודות
+        </Text>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("aboutS")}
+        >
+          <Image style={tw("h-10 w-10")} source={require("../about.png")} />
+        </TouchableOpacity>
+        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+          התנתקות
+        </Text>
         <TouchableOpacity style={styles.menuItem} onPress={logout}>
           <Image style={tw("h-10 w-10")} source={require("../logout.png")} />
         </TouchableOpacity>
@@ -170,4 +197,19 @@ export default function useAuth() {
 const styles = StyleSheet.create({
   menuItem: {},
   menuText: {},
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  text: {
+    color: "white",
+    fontSize: 42,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#000000c0",
+  },
 });

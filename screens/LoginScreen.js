@@ -52,30 +52,52 @@ const LoginScreen = () => {
         resizeMode="cover"
         style={tw("flex-1")}
         source={{
-          uri: "https://sites.education.gov.il/cloud/home/tikshuv/PublishingImages/shituf_peula.jpg",
+          uri: "https://images.pexels.com/photos/974746/pexels-photo-974746.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         }}
       >
         <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>guest</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SignUp")}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>signUp</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={handlesignInWithGoogle}
+          onPress={() => navigation.navigate("forgotPassword")}
           style={[
-            tw("bg-white absolute bottom-20 w-32 rounded-2xl p-4"),
+            tw("bg-white absolute bottom-5 w-52 rounded-2xl p-4"),
             { marginHorizontal: "25%" },
           ]}
         >
-          <Image style={tw("h-14 w-40")} source={require("../google.png")} />
+          <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
+            שכחתי סיסמה
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={signInWithGoogle}
+          style={[
+            tw("bg-white absolute bottom-20 w-52 rounded-2xl p-4"),
+            { marginHorizontal: "25%" },
+          ]}
+        >
+          <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
+            כניסה עם גוגל{" "}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Guest")}
+          style={[
+            tw("bg-white absolute bottom-60 w-52 rounded-2xl p-4"),
+            { marginHorizontal: "25%" },
+          ]}
+        >
+          <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
+            אורח
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SignUp")}
+          style={[
+            tw("bg-white absolute bottom-40 w-52 rounded-2xl p-4"),
+            { marginHorizontal: "25%" },
+          ]}
+        >
+          <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
+            הרשמה{" "}
+          </Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -85,67 +107,42 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  menuItem: {
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomColor: "black",
+    borderWidth: 1,
+  },
+  cardShadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
   container: {
     flex: 1,
+  },
+  image: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
-
-  inputContainer: {
-    width: "80%",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-  },
-  categoryIcon: {
-    borderWidth: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    width: 70,
-    height: 70,
-    left: 10,
-    backgroundColor: "#fdeae7" /* '#FF6347' */,
-    borderRadius: 50,
-    marginHorizontal: 10,
-  },
-  sliderImage: {
-    height: "100%",
-    width: "100%",
-    alignSelf: "center",
-    borderRadius: 8,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: "#0782F9",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    //borderWidth:'2'
-  },
-  buttonText: {
+  text: {
     color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#0782F9",
-    fontWeight: "700",
-    fontSize: 16,
+    fontSize: 42,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#000000c0",
   },
 });

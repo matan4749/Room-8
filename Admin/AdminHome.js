@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
+  ImageBackground,
   Image,
   Text,
   TouchableOpacity,
@@ -30,6 +31,15 @@ const AdminHome = () => {
 
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
+      <ImageBackground
+        source={require("../pexels.png")}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          מנהל
+        </Text>
+      </ImageBackground>
       <View style={styles.header}>
         {Aprment && (
           <View style={{ position: "relative" }}>
@@ -45,9 +55,15 @@ const AdminHome = () => {
           </View>
         )}
         <TouchableOpacity onPress={() => navigation.navigate("Users")}>
+          <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+            משתמשים
+          </Text>
           <Image style={tw("h-14 w-14")} source={require("../users.png")} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("UserApartments")}>
+          <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+            דירות
+          </Text>
           <Image
             style={tw("h-14 w-14")}
             source={require("../apartments.png")}
@@ -63,6 +79,15 @@ const AdminHome = () => {
           />
         </TouchableOpacity>
       </View>
+      <ImageBackground
+        source={require("../pexels.png")}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          מנהל
+        </Text>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -92,5 +117,20 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
+  },
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  text: {
+    color: "white",
+    fontSize: 42,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#000000c0",
   },
 });

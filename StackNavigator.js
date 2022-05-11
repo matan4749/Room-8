@@ -12,6 +12,8 @@ import MyApratment from "./screens/MyApratment";
 import Users from "./Admin/Users";
 import AdminHome from "./Admin/AdminHome";
 import UserApartments from "./Admin/UserApartments";
+import HomeGuest from "./screens/HomeGuest";
+import about from "./screens/about";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -25,7 +27,7 @@ const StackNavigator = () => {
     >
       {user ? (
         <>
-          {user.email === "matan4749x@gmail.com" && (
+          {user.email === "matan4749@gmail.com" && (
             <>
               <Stack.Group>
                 <Stack.Screen name="Admin" component={AdminHome} />
@@ -41,23 +43,24 @@ const StackNavigator = () => {
           )}
           <Stack.Group>
             <Stack.Screen name="Home" component={HomeScreen} />
-
-            <Stack.Screen
-              name="forgotPassword"
-              component={forgotPasswordScreen}
-            />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: "modal" }}>
             <Stack.Screen name="addAprment" component={AddApartment} />
             <Stack.Screen name="FilterScreen" component={FilterScreen} />
             <Stack.Screen name="Favorites" component={Favorites} />
             <Stack.Screen name="MyApratment" component={MyApratment} />
+            <Stack.Screen name="aboutS" component={about} />
           </Stack.Group>
         </>
       ) : (
         <Stack.Group>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="Guest" component={HomeGuest} />
+          <Stack.Screen
+            name="forgotPassword"
+            component={forgotPasswordScreen}
+          />
         </Stack.Group>
       )}
     </Stack.Navigator>

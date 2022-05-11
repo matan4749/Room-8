@@ -8,6 +8,7 @@ import {
   CheckBox,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
+import tw from "tailwind-rn";
 const FilterScreen = ({ closeModal }) => {
   const [filterBy, setFilterBy] = useState({
     rooms: false,
@@ -114,44 +115,63 @@ const FilterScreen = ({ closeModal }) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableOpacity
-        style={{ backgroundColor: "green", height: 20, width: 100 }}
         onPress={() => closeModal(filterBy)}
+        style={[
+          tw("bg-white absolute bottom-5 w-52 rounded-2xl p-4"),
+          { marginHorizontal: "25%" },
+        ]}
       >
-        <Text>X</Text>
+        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+          בצע סינון
+        </Text>
       </TouchableOpacity>
-      <View >
-        <Text>is animals</Text>
+      <View>
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          בעלי חיים
+        </Text>
         <RNPickerSelect
+          style={pickerStyle}
           onValueChange={(value) =>
-            setFilterBy({ ...filterBy, isAnimals: value })}
+            setFilterBy({ ...filterBy, isAnimals: value })
+          }
           items={isAnimalsOpts}
         />
-        <Text>is Rooms</Text>
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          מספר חדרים
+        </Text>
 
         <RNPickerSelect
-          onValueChange={(value) =>
-            setFilterBy({ ...filterBy, Rooms: value })}
+          onValueChange={(value) => setFilterBy({ ...filterBy, Rooms: value })}
           items={roomsOpts}
         />
-        <Text>is isSmokers</Text>
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          מעשנים
+        </Text>
 
         <RNPickerSelect
           onValueChange={(value) =>
-            setFilterBy({ ...filterBy, isSmokers: value })}
+            setFilterBy({ ...filterBy, isSmokers: value })
+          }
           items={isSmokersOpts}
         />
-        <Text>is isstudent</Text>
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          סטודנטים
+        </Text>
 
         <RNPickerSelect
           onValueChange={(value) =>
-            setFilterBy({ ...filterBy, isstudent: value })}
+            setFilterBy({ ...filterBy, isstudent: value })
+          }
           items={studentOpts}
         />
-        <Text>is Sabbath</Text>
+        <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
+          שומרים שבת
+        </Text>
 
         <RNPickerSelect
           onValueChange={(value) =>
-            setFilterBy({ ...filterBy, Sabbath: value })}
+            setFilterBy({ ...filterBy, Sabbath: value })
+          }
           items={sabastOpts}
         />
       </View>
@@ -230,6 +250,23 @@ const FilterScreen = ({ closeModal }) => {
 };
 
 export default FilterScreen;
+const pickerStyle = {
+  inputIOS: {
+    color: "white",
+    paddingHorizontal: 10,
+    backgroundColor: "red",
+    borderRadius: 5,
+  },
+  placeholder: {
+    color: "white",
+  },
+  inputAndroid: {
+    color: "white",
+    paddingHorizontal: 10,
+    backgroundColor: "red",
+    borderRadius: 5,
+  },
+};
 
 const styles = StyleSheet.create({
   opt: {
