@@ -3,20 +3,21 @@ import {
     StyleSheet,
     View, Text
 } from "react-native";
+import useAuth from "../hooks/useAuth";
 import { notificationService } from "../services/notificationService";
 
 
 const NotificationsScreen = ({ route }) => {
 
     const { user } = useAuth();
-    const [nots, setNots] = useState()
+    const [nots, setNots] = useState([])
     useEffect(() => {
         getData()
-    })
+    }, [])
 
 
     const getData = async () => {
-        const nots = await notificationService.getAllById(user.id)
+        const nots = await notificationService.getAllById(user.email)
         setNots(nots)
     }
 
@@ -24,14 +25,14 @@ const NotificationsScreen = ({ route }) => {
         <View >
             <Text>ddddd</Text>
             {nots.map(not => {
-                <>
+                return <View key={not.id}>
                     <Text>
                         {not.title}
                     </Text>
                     <Text>
                         {not.desc}
                     </Text>
-                </>
+                </View>
             })}
         </View>
     );

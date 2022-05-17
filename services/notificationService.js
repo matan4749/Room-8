@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 
@@ -30,6 +30,7 @@ async function getAllById(userId) {
     const notifications = []
     docs.forEach(doc => {
         const not = doc.data()
+        console.log(not.ownerId, userId);
         if (not.ownerId === userId) {
             notifications.push({ ...not, id: doc.id })
         }
