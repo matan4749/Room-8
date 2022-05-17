@@ -101,7 +101,6 @@ const HomeScreen = () => {
               <Image
                 style={tw("h-10 w-10 rounded-full")}
                 source={{ uri: user.photoURL }}
-                //source={require("../user.png")}
               />
             </TouchableOpacity>
           </View>
@@ -180,7 +179,7 @@ const HomeScreen = () => {
                     </View>
                     <View>
                       <Text> מעשנים: {card?.isSmokers ? "✅" : "❎"}</Text>
-                      <Text> סטודרנטים: {card?.isstudent ? "✅" : "❎"}</Text>
+                      <Text> סטודנטים: {card?.isstudent ? "✅" : "❎"}</Text>
                     </View>
                     <Text style={tw("text-1xl font-bold")}>
                       {card?.Address}
@@ -196,7 +195,7 @@ const HomeScreen = () => {
                     styles.cardShadow,
                   ]}
                 >
-                  <Text style={tw("font-bold pb-5")}>No more profiles</Text>
+                  <Text style={tw("font-bold pb-5")}>אין דירות להצגה</Text>
 
                   <Image
                     style={tw("h-20 w-full")}

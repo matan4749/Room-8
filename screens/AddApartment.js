@@ -105,36 +105,28 @@ const AddApartment = ({ route }) => {
         <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
           שלום {user.displayName}❤️
         </Text>
-        <Text style={tw("text-center p-4 font-bold text-red-400")}>
-          Step 1: כתובת הדירה
-        </Text>
+        <Text style={tw("text-center p-4 font-bold text-red-400")}></Text>
         <TextInput
           value={Address}
           onChangeText={setAddress}
           style={tw("text-center text-xl pb-2")}
           placeholder="הכנס בבקשה את כתובת הדירה "
         />
-        <Text style={tw("text-center p-4 font-bold text-red-400")}>
-          Step 1: מספר חדרים
-        </Text>
+        <Text style={tw("text-center p-4 font-bold text-red-400")}></Text>
         <TextInput
           value={Rooms}
           onChangeText={setRooms}
           style={tw("text-center text-xl pb-2")}
           placeholder="הכנס בבקשה את מספר החדרים "
         />
-        <Text style={tw("text-center p-4 font-bold text-red-400")}>
-          Step 1: מספר שותפים
-        </Text>
+        <Text style={tw("text-center p-4 font-bold text-red-400")}></Text>
         <TextInput
           value={NumberOfPartners}
           onChangeText={setNumberOfPartners}
           style={tw("text-center text-xl pb-2")}
           placeholder="הכנס בבקשה את מספר השותפים "
         />
-        <Text style={tw("text-center p-4 font-bold text-red-400")}>
-          Step 1: The cost of rent
-        </Text>
+        <Text style={tw("text-center p-4 font-bold text-red-400")}></Text>
         <TextInput
           value={Rent}
           onChangeText={setRent}
@@ -212,9 +204,7 @@ const AddApartment = ({ route }) => {
           ]}
           onPress={BuildAprtment}
         >
-          <Text style={tw("text-center text-white text-xl")}>
-            Update Aprtment
-          </Text>
+          <Text style={tw("text-center text-white text-xl")}>עדכון דירה </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

@@ -69,15 +69,6 @@ const AdminHome = () => {
             source={require("../apartments.png")}
           />
         </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Ionicons
-            onPress={() => navigation.navigate("forgotPassword")}
-            name="chatbubbles-sharp"
-            size={30}
-            color="#FF5864"
-          />
-        </TouchableOpacity>
       </View>
       <ImageBackground
         source={require("../pexels.png")}
