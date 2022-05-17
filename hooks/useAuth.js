@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import * as Google from "expo-google-app-auth";
 import SideMenu from "react-native-side-menu-updated";
-
 import { auth } from "../firebase";
 import {
   GoogleAuthProvider,
@@ -24,7 +23,6 @@ import { userService } from "../services/userService";
 import tw from "tailwind-rn";
 
 const AuthContext = createContext({});
-
 const config = {
   androidClientId:
     "463366353489-rpj8e62kefof9oaam8lbs36mumdi79sq.apps.googleusercontent.com",
@@ -45,6 +43,7 @@ export function AuthProvider({ children }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, async (user) => {
+        console.log('here onAuthStateChanged ');
         if (user) {
           console.log({ user });
           const res = await userService.getByEmail(user.email);
@@ -63,14 +62,14 @@ export function AuthProvider({ children }) {
     console.log("rgdgdrgdr");
     await Google.logInAsync(config)
       .then(async (logInResult) => {
-        console.log({ logInResult });
         if (logInResult.type === "success") {
           const { idToken, accessToken } = logInResult;
           const credential = GoogleAuthProvider.credential(
             idToken,
             accessToken
           );
-
+          console.log('user:', logInResult.user);
+          setUser(logInResult.user)
           await signInWithCredential(auth, credential);
         }
         return Promise.reject(); // Or handle user cancelation separatedly
@@ -110,7 +109,6 @@ export function AuthProvider({ children }) {
   );
 
   const Menu = () => {
-    console.log({ navigation, user });
     return (
       <View>
         <ImageBackground

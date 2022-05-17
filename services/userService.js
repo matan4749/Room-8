@@ -1,6 +1,7 @@
 import { db } from "../firebase";
 import { collection, setDoc, doc, getDocs } from "firebase/firestore";
 import { apartmentService } from "./apartmentService";
+import { notificationService } from "./notificationService";
 export const userService = {
   createUser, addFav, getByEmail,
 };
@@ -58,6 +59,7 @@ function addFav(user, fav) {
   }
   console.log({ user })
   setDoc(doc(db, "users", user.email), JSON.parse(JSON.stringify(user)))
+  notificationService.create(user.email, fav)
 }
 
 

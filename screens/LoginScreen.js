@@ -9,24 +9,21 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import { auth } from "../firebase";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { signUp, SignIn, forgotPassword, signInWithGoogle } from "../firebase";
+import { signUp, SignIn, forgotPassword, signInWithGoogleWeb } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 import useAuth from "../hooks/useAuth";
 import tw from "tailwind-rn";
-
+import { Platform } from 'react-native';
 const LoginScreen = () => {
-  const { user, loading, error, logout } = useAuth();
+  const { user, loading, error, logout, signInWithGoogle } = useAuth();
+  const signWithGoogle = Platform.OS === 'web' ? signInWithGoogleWeb : signInWithGoogle
   const [username, setUsername] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState();
   const navigation = useNavigation();
 
-  async function handlesignInWithGoogle() {
-    await signInWithGoogle();
-  }
+
   //const{signInWithGoogle}=useAuth();
 
   useLayoutEffect(() => {
@@ -67,7 +64,7 @@ const LoginScreen = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={signInWithGoogle}
+          onPress={signWithGoogle}
           style={[
             tw("bg-white absolute bottom-20 w-52 rounded-2xl p-4"),
             { marginHorizontal: "25%" },

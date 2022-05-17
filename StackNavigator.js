@@ -14,11 +14,11 @@ import AdminHome from "./Admin/AdminHome";
 import UserApartments from "./Admin/UserApartments";
 import HomeGuest from "./screens/HomeGuest";
 import about from "./screens/about";
+import NotificationsScreen from "./screens/notificationsScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
   const { user } = useAuth();
-
   return (
     <Stack.Navigator
       defaultScreenOptions={{
@@ -50,6 +50,7 @@ const StackNavigator = () => {
             <Stack.Screen name="Favorites" component={Favorites} />
             <Stack.Screen name="MyApratment" component={MyApratment} />
             <Stack.Screen name="aboutS" component={about} />
+            <Stack.Screen name="notifications" component={NotificationsScreen} />
           </Stack.Group>
         </>
       ) : (

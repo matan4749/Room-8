@@ -67,11 +67,9 @@ const HomeScreen = () => {
   async function getAprtments() {
     let docSnap = await getDocs(collection(db, "apartments"));
     let newArr = Aprment;
-    console.log({ docSnap });
     docSnap.forEach((doc) => {
       if (user.favs) {
         const found = user.favs.find((fav) => fav.id === doc.id);
-        console.log({ found });
         if (!found) newArr.push({ ...doc.data(), id: doc.id });
       } else {
         newArr.push({ ...doc.data(), id: doc.id });
@@ -113,13 +111,18 @@ const HomeScreen = () => {
           <Image style={tw("h-14 w-14")} source={require("../logo.png")} />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Ionicons
             onPress={() => navigation.navigate("forgotPassword")}
             name="chatbubbles-sharp"
             size={30}
             color="#FF5864"
           />
+        </TouchableOpacity> */}
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('notifications')
+        }}>
+          <Text> not</Text>
         </TouchableOpacity>
       </View>
 
@@ -181,7 +184,7 @@ const HomeScreen = () => {
                       <Text> מעשנים: {card?.isSmokers ? "✅" : "❎"}</Text>
                       <Text> סטודנטים: {card?.isstudent ? "✅" : "❎"}</Text>
                     </View>
-                    <Text style={tw("text-1xl font-bold")}>
+                    <Text style={tw("text-xl font-bold")}>
                       {card?.Address}
                     </Text>
                   </View>

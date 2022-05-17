@@ -57,9 +57,8 @@ export function SignIn(email, password) {
 export function forgotPassword(email) {
   return sendPasswordResetEmail(auth, email);
 }
-export function signInWithGoogle() {
+export function signInWithGoogleWeb() {
   signInWithPopup(auth, new GoogleAuthProvider()).then((data) => {
-    console.log(data);
     userService.createUser(data.user);
   });
 }
