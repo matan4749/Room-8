@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import {
   View,
+  Linking,
   StyleSheet,
   Image,
   Text,
@@ -14,7 +15,14 @@ import { onSnapshot, collection, getDocs, doc } from "@firebase/firestore";
 import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  Ionicons,
+  FontAwesome,
+  MaterialIcons,
+  Feather,
+} from "@expo/vector-icons";
 import tw from "tailwind-rn";
 import FilterScreen from "./FilterScreen";
 import { AppContext } from "../contexts/appContext";
@@ -103,26 +111,24 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        <TouchableOpacity
-          onPress={() => {
-            handleNavEdit();
-          }}
-        >
-          <Image style={tw("h-14 w-14")} source={require("../logo.png")} />
+        <TouchableOpacity>
+          <MaterialIcons
+            onPress={() => {
+              handleNavEdit();
+            }}
+            name="add-business"
+            size={40}
+            color="black"
+          />
         </TouchableOpacity>
 
-        {/* <TouchableOpacity>
+        <TouchableOpacity>
           <Ionicons
-            onPress={() => navigation.navigate("forgotPassword")}
-            name="chatbubbles-sharp"
-            size={30}
-            color="#FF5864"
+            onPress={() => navigation.navigate("notifications")}
+            name="notifications"
+            size={40}
+            color="##f08080"
           />
-        </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => {
-          navigation.navigate('notifications')
-        }}>
-          <Text> not</Text>
         </TouchableOpacity>
       </View>
 
@@ -184,9 +190,7 @@ const HomeScreen = () => {
                       <Text> מעשנים: {card?.isSmokers ? "✅" : "❎"}</Text>
                       <Text> סטודנטים: {card?.isstudent ? "✅" : "❎"}</Text>
                     </View>
-                    <Text style={tw("text-xl font-bold")}>
-                      {card?.Address}
-                    </Text>
+                    <Text style={tw("text-xl font-bold")}>{card?.Address}</Text>
                   </View>
                 </View>
               ) : (
@@ -212,7 +216,6 @@ const HomeScreen = () => {
             animateCardOpacity
             verticalSwipe={false}
             onSwipedLeft={(cardIndex) => {
-              console.log("Swipe PASS--", cardIndex);
               // swipeLeft(cardIndex);
             }}
             onSwipedRight={(cardIndex) => {
@@ -228,28 +231,44 @@ const HomeScreen = () => {
         )}
       </View>
       <View style={tw("flex flex-row justify-evenly")}>
-        <TouchableOpacity
-          onPress={() => swipeRef.current.swipeLeft()}
-          style={[
-            tw("items-center justify-center rounded-full w-16 h-16 bg-red-200"),
-          ]}
-        >
-          <Entypo name="cross" size={24} color="red" />
+        <TouchableOpacity onPress={() => swipeRef.current.swipeLeft()}>
+          <Ionicons name="heart-dislike-circle" size={60} color="red" />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => swipeRef.current.swipeRight()}
-          style={[
-            tw(
-              "items-center justify-center rounded-full w-16 h-16 bg-green-200"
-            ),
-          ]}
-        >
-          <AntDesign name="heart" size={24} color="green" />
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
-          <Image style={tw("h-14 w-14")} source={require("../filter.png")} />
+          <AntDesign name="filter" size={40} color="black" />
         </TouchableOpacity>
+        <TouchableOpacity>
+          <FontAwesome
+            onPress={() =>
+              Linking.openURL(`https://wa.me/${card?.PhoneNumber}`)
+            }
+            name="whatsapp"
+            size={40}
+            color="#32cd32"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Feather
+            // onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
+            name="phone-call"
+            size={40}
+            color="black"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <AntDesign
+            onPress={() => Linking.openURL(`mailto:${user.email}`)}
+            name="mail"
+            size={40}
+            color="black"
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => swipeRef.current.swipeRight()}>
+          <Ionicons name="heart-circle-sharp" size={60} color="green" />
+        </TouchableOpacity>
+
         <Modal animatiomnType="slide" visible={showFilter}>
           <FilterScreen
             closeModal={(filterBy) => {
