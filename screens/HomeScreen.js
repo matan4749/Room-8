@@ -111,11 +111,11 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          handleNavEdit();
+        }}>
           <MaterialIcons
-            onPress={() => {
-              handleNavEdit();
-            }}
+
             name="add-business"
             size={40}
             color="black"

@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  CheckBox,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import tw from "tailwind-rn";

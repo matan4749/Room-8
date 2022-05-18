@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -9,11 +9,9 @@ import {
   Platform,
   Button,
   Image,
-  CheckBox,
 } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import useAuth from "../hooks/useAuth";
 import { db } from "../firebase";
 import * as ImagePicker from "expo-image-picker";
@@ -24,7 +22,6 @@ const AddApartment = ({ route }) => {
   const [Rooms, setRooms] = useState(null);
   const [Rent, setRent] = useState(null);
   const [NumberOfPartners, setNumberOfPartners] = useState(null);
-  const [Apartment, setApartment] = useState([]);
   const [image, setImage] = useState(null);
   const { user } = useAuth();
   const incompleteForm = !Address || !Rooms || !Rent || !image;
@@ -143,21 +140,36 @@ const AddApartment = ({ route }) => {
       <View style={styles.container}>
         <View>
           <View style={styles.checkboxContainer}>
-            <CheckBox
+            {/* <CheckBox
               value={isAnimals}
               onValueChange={setIsAnimals}
               style={styles.checkbox}
-            />
+            /> */}
+            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
+              console.log('TouchableOpacityTouchableOpacity');
+              setIsAnimals(!isAnimals)
+            }}>
+              {isAnimals ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            </TouchableOpacity>
+
+
+
             <Text style={styles.label}>בעלי חיים בדירה</Text>
           </View>
         </View>
         <View style={styles.container}>
           <View style={styles.checkboxContainer}>
-            <CheckBox
+            {/* <Checkbox
               value={isSmokers}
               onValueChange={setIsSmokers}
               style={styles.checkbox}
-            />
+            /> */}
+            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
+              console.log('TouchableOpacityTouchableOpacity');
+              setIsSmokers(!isSmokers)
+            }}>
+              {isSmokers ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            </TouchableOpacity>
             <Text style={styles.label}>מעשנים בדירה</Text>
           </View>
         </View>
@@ -165,32 +177,50 @@ const AddApartment = ({ route }) => {
       <View>
         <View style={styles.container}>
           <View style={styles.checkboxContainer}>
-            <CheckBox
+            {/* <CheckBox
               value={isstudent}
               onValueChange={setIsStudent}
               style={styles.checkbox}
-            />
+            /> */}
+            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
+              console.log('TouchableOpacityTouchableOpacity');
+              setIsStudent(!isstudent)
+            }}>
+              {isstudent ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            </TouchableOpacity>
             <Text style={styles.label}>סטודנטים</Text>
           </View>
         </View>
         <View style={styles.container}>
           <View style={styles.checkboxContainer}>
-            <CheckBox
+            {/* <CheckBox
               value={Sabbath}
               onValueChange={setSabbath}
               style={styles.checkbox}
-            />
+            /> */}
+            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
+              console.log('TouchableOpacityTouchableOpacity');
+              setSabbath(!Sabbath)
+            }}>
+              {Sabbath ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            </TouchableOpacity>
             <Text style={styles.label}>שומרים שבת</Text>
           </View>
         </View>
       </View>
       <View style={styles.container}>
         <View style={styles.checkboxContainer}>
-          <CheckBox
+          {/* <CheckBox
             value={iskosher}
             onValueChange={setiskosher}
             style={styles.checkbox}
-          />
+          /> */}
+          <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
+            console.log('TouchableOpacityTouchableOpacity');
+            setiskosher(!iskosher)
+          }}>
+            {iskosher ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+          </TouchableOpacity>
           <Text style={styles.label}>כשר</Text>
         </View>
       </View>

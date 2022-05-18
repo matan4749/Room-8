@@ -10,7 +10,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-community/checkbox": "^0.5.12",
     "@react-native-masked-view/masked-view": "^0.2.5",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
