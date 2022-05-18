@@ -95,7 +95,7 @@ const HomeScreen = () => {
       navigation.navigate("addAprment");
     }
   };
-
+console.log(user);
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
       <View style={styles.header}>
@@ -106,14 +106,16 @@ const HomeScreen = () => {
             >
               <Image
                 style={tw("h-10 w-10 rounded-full")}
-                source={{ uri: user.photoURL }}
+                source={{ uri: user.photoUrl }}
               />
             </TouchableOpacity>
           </View>
         )}
         <TouchableOpacity onPress={() => {
           handleNavEdit();
-        }}>
+        }}
+          style={{ width: 50, height: 50 }}
+        >
           <MaterialIcons
 
             name="add-business"

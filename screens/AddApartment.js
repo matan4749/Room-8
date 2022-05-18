@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
   Platform,
-  Button,
+  Button, ScrollView,
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -56,6 +56,7 @@ const AddApartment = ({ route }) => {
       isSmokers: isSmokers,
       isstudent: isstudent,
       isAnimals: isAnimals,
+      iskosher
     })
       .then(() => {
         navigation.navigate("Home");
@@ -94,10 +95,7 @@ const AddApartment = ({ route }) => {
 
   const { logout } = useAuth();
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View>
-        <TouchableOpacity></TouchableOpacity>
-      </View>
+    <ScrollView behavior="padding">
       <View style={styles.inputContainer}>
         <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
           שלום {user.displayName}❤️
@@ -131,12 +129,7 @@ const AddApartment = ({ route }) => {
           placeholder="הכנס בבקשה את עלות השכירות "
         />
       </View>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button title="הוספת תמונה" onPress={pickImage} />
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        )}
-      </View>
+
       <View style={styles.container}>
         <View>
           <View style={styles.checkboxContainer}>
@@ -151,8 +144,6 @@ const AddApartment = ({ route }) => {
             }}>
               {isAnimals ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
             </TouchableOpacity>
-
-
 
             <Text style={styles.label}>בעלי חיים בדירה</Text>
           </View>
@@ -226,6 +217,12 @@ const AddApartment = ({ route }) => {
       </View>
       <View style={styles.container}></View>
       <View style={styles.buttonContainer}>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <Button title="הוספת תמונה" onPress={pickImage} />
+          {image && (
+            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+          )}
+        </View>
         <TouchableOpacity
           disabled={incompleteForm}
           style={[
@@ -237,7 +234,8 @@ const AddApartment = ({ route }) => {
           <Text style={tw("text-center text-white text-xl")}>עדכון דירה </Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+
+    </ScrollView>
   );
 };
 
@@ -245,7 +243,6 @@ export default AddApartment;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
