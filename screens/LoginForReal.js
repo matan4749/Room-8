@@ -11,52 +11,37 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { auth } from "../firebase";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { signUp, SignIn, signInWithGoogle } from "../firebase";
+import { signUp, SignIn } from "../firebase";
 import useAuth from "../hooks/useAuth";
 
-const SignUpScreen = () => {
-  const [username, setUsername] = useState();
+const LoginForRealScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState();
-  const [city, setCity] = useState();
   const { setUser } = useAuth()
   console.log({ setUser });
-  async function handlesignup() {
-    console.log('gg');
-    signUp(email, password).then((userCredential) => {
+
+  async function login() {
+    console.log({email,password});
+    await SignIn(email, password).then((userCredential) => {
       // Signed in
       console.log({ userCredential });
       const user = userCredential.user;
-      // ...
       setUser(user)
+      // ...
     })
       .catch((error) => {
-        console.log({ error });
+        console.log({error});
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
       });;
   }
-  async function handlesignIn() {
-    await SignIn(email, password);
-  }
 
-  async function handlesignInWithGoogle() {
-    await signInWithGoogle();
-  }
+
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="username"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-          style={styles.input}
-        />
         <TextInput
           placeholder="Email"
           keyboardType="email-address"
@@ -71,36 +56,21 @@ const SignUpScreen = () => {
           style={styles.input}
           secureTextEntry
         />
-        <TextInput
-          placeholder="PhoneNumber"
-          keyboardType="number-pad"
-          value={phoneNumber}
-          onChangeText={(text) => setPhoneNumber(text)}
-          style={styles.input}
-          secureTextEntry
-        />
       </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={handlesignup}
+          onPress={login}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Register</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={handlesignInWithGoogle}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>signIn With Google</Text>
+          <Text style={styles.buttonOutlineText}>Login</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
 
-export default SignUpScreen;
+export default LoginForRealScreen;
 
 const styles = StyleSheet.create({
   container: {

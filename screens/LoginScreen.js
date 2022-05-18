@@ -93,7 +93,18 @@ const LoginScreen = () => {
           ]}
         >
           <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
-            הרשמה{" "}
+            הרשמה
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("LoginForReal")}
+          style={[
+            tw("bg-white absolute bottom-70 w-52 rounded-2xl p-4"),
+            { marginHorizontal: "25%" },
+          ]}
+        >
+          <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
+            התחברות
           </Text>
         </TouchableOpacity>
       </ImageBackground>

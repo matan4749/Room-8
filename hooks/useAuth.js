@@ -104,6 +104,7 @@ export function AuthProvider({ children }) {
       error,
       signInWithGoogle,
       logout,
+      setUser
     }),
     [user, loading, error]
   );
@@ -177,7 +178,7 @@ export function AuthProvider({ children }) {
         toggleMenu: setShowMenu,
       }}
     >
-      <SideMenu isOpen={showMenu} disableGestures={true} menu={<Menu />}>
+      <SideMenu isOpen={showMenu} disableGestures={true} menu={showMenu && <Menu />}>
         <AuthContext.Provider value={memoedValue}>
           {!loadingInitial && children}
         </AuthContext.Provider>

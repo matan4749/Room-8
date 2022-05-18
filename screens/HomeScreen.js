@@ -36,7 +36,7 @@ const HomeScreen = () => {
   const swipeRef = useRef(null);
   const [showFilter, setShowFilter] = useState(false);
   const context = useContext(AppContext);
-
+  const [idx, setIdx] = useState(0)
   useEffect(() => {
     getAprtments();
   }, []);
@@ -95,7 +95,6 @@ const HomeScreen = () => {
       navigation.navigate("addAprment");
     }
   };
-console.log(user);
   return (
     <SafeAreaView style={tw("flex-1 relative")}>
       <View style={styles.header}>
@@ -106,7 +105,7 @@ console.log(user);
             >
               <Image
                 style={tw("h-10 w-10 rounded-full")}
-                source={{ uri: user.photoUrl }}
+                source={{ uri: user.photoUrl || user.photoURL || require('../Admin.png') }}
               />
             </TouchableOpacity>
           </View>
@@ -194,6 +193,11 @@ console.log(user);
                     </View>
                     <Text style={tw("text-xl font-bold")}>{card?.Address}</Text>
                   </View>
+
+                  <TouchableOpacity onPress={() => navigation.navigate("SingleApartment", { apartment: card })}>
+                    <Text>
+                      go to details</Text>
+                  </TouchableOpacity>
                 </View>
               ) : (
                 <View
@@ -219,16 +223,18 @@ console.log(user);
             verticalSwipe={false}
             onSwipedLeft={(cardIndex) => {
               // swipeLeft(cardIndex);
+              setIdx(idx + 1)
             }}
             onSwipedRight={(cardIndex) => {
               console.log("Swipe MATCH", cardIndex);
-
+              setIdx(idx + 1)
               //swipeRight(cardIndex);
               userService.addFav(user, filteredItems[cardIndex]);
             }}
             cardIndex={0}
             backgroundColor={"#4FD0E9"}
             stackSize={5}
+
           ></Swiper>
         )}
       </View>
@@ -243,7 +249,7 @@ console.log(user);
         <TouchableOpacity>
           <FontAwesome
             onPress={() =>
-              Linking.openURL(`https://wa.me/${card?.PhoneNumber}`)
+              Linking.openURL(`https://wa.me/${filteredItems[idx]?.PhoneNumber}`)
             }
             name="whatsapp"
             size={40}
@@ -252,12 +258,13 @@ console.log(user);
         </TouchableOpacity>
         <TouchableOpacity>
           <Feather
-            // onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
+            onPress={() => Linking.openURL(`tel:${filteredItems[idx].phoneNumber}`)}
             name="phone-call"
             size={40}
             color="black"
           />
         </TouchableOpacity>
+
         <TouchableOpacity>
           <AntDesign
             onPress={() => Linking.openURL(`mailto:${user.email}`)}
