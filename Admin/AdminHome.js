@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import tw from "tailwind-rn";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { AppContext } from "../contexts/appContext";
 import { userService } from "../services/userService";
@@ -52,21 +53,30 @@ const AdminHome = () => {
                 //source={require("../user.png")}
               />
             </TouchableOpacity>
+            <Text
+              style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}
+            >
+              התנתקות
+            </Text>
+            <TouchableOpacity style={styles.menuItem} onPress={logout}>
+              <Entypo name="log-out" size={60} color="black" />
+            </TouchableOpacity>
           </View>
         )}
         <TouchableOpacity onPress={() => navigation.navigate("Users")}>
           <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
             משתמשים
           </Text>
-          <Image style={tw("h-14 w-14")} source={require("../users.png")} />
+          <FontAwesome name="users" size={60} color="black" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("UserApartments")}>
           <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
             דירות
           </Text>
-          <Image
-            style={tw("h-14 w-14")}
-            source={require("../apartments.png")}
+          <MaterialCommunityIcons
+            name="home-city-outline"
+            size={60}
+            color="black"
           />
         </TouchableOpacity>
       </View>

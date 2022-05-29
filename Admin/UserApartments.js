@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native";
 import { db } from "../firebase";
 import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import tw from "tailwind-rn";
 function UserApartments() {
   const { user } = useAuth();
@@ -52,13 +53,10 @@ function UserApartments() {
                 <Text> animals:{item.isAnimals ? "yes" : "no"}</Text>
               </View>
               <TouchableOpacity onPress={() => removeApartment(item)}>
-                <Image
-                  style={tw("h-7 w-7")}
-                  source={require("../delete.png")}
-                />
+                <AntDesign name="deleteuser" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => editApartment(item)}>
-                <Image style={tw("h-7 w-7")} source={require("../edit.png")} />
+                <FontAwesome5 name="user-edit" size={24} color="black" />
               </TouchableOpacity>
             </View>
           );

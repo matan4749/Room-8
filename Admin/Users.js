@@ -2,6 +2,7 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { db } from "../firebase";
 import tw from "tailwind-rn";
 function Users() {
@@ -58,10 +59,7 @@ function Users() {
                 <Text> email: {u.email}</Text>
               </View>
               <TouchableOpacity onPress={() => removeUsers(u)}>
-                <Image
-                  style={tw("h-7 w-7")}
-                  source={require("../delete.png")}
-                />
+                <AntDesign name="deleteuser" size={24} color="black" />
               </TouchableOpacity>
             </View>
           );

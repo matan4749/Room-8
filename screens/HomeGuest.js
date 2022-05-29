@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Modal,
 } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Swiper from "react-native-deck-swiper";
 import { db } from "../firebase";
 import { onSnapshot, collection, getDocs, doc } from "@firebase/firestore";
@@ -81,7 +82,7 @@ const HomeGuest = () => {
         {apartments && <View style={{ position: "relative" }}></View>}
 
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-          <Image style={tw("h-14 w-14")} source={require("../Singup.png")} />
+          <FontAwesome5 name="user-plus" size={50} color="black" />
           <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
             הרשמה
           </Text>

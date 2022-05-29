@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   View,
   Platform,
-  Button, ScrollView,
+  Button,
+  ScrollView,
   Image,
 } from "react-native";
+import { Fontisto } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { setDoc, doc } from "firebase/firestore";
 import useAuth from "../hooks/useAuth";
@@ -21,6 +23,7 @@ const AddApartment = ({ route }) => {
   const [Address, setAddress] = useState(null);
   const [Rooms, setRooms] = useState(null);
   const [Rent, setRent] = useState(null);
+  const [PhoneNumber, setPhoneNumber] = useState(null);
   const [NumberOfPartners, setNumberOfPartners] = useState(null);
   const [image, setImage] = useState(null);
   const { user } = useAuth();
@@ -50,13 +53,14 @@ const AddApartment = ({ route }) => {
       Address: Address,
       Rooms: Rooms,
       Rent: Rent,
+      PhoneNumber: PhoneNumber,
       NumberOfPartners: NumberOfPartners,
       photoURL: image,
       Sabbath: Sabbath,
       isSmokers: isSmokers,
       isstudent: isstudent,
       isAnimals: isAnimals,
-      iskosher
+      iskosher: iskosher,
     })
       .then(() => {
         navigation.navigate("Home");
@@ -98,7 +102,7 @@ const AddApartment = ({ route }) => {
     <ScrollView behavior="padding">
       <View style={styles.inputContainer}>
         <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
-          שלום {user.displayName}❤️
+          שלום {user.name}❤️
         </Text>
         <Text style={tw("text-center p-4 font-bold text-red-400")}></Text>
         <TextInput
@@ -128,91 +132,116 @@ const AddApartment = ({ route }) => {
           style={tw("text-center text-xl pb-2")}
           placeholder="הכנס בבקשה את עלות השכירות "
         />
+        <Text style={tw("text-center p-4 font-bold text-red-400")}></Text>
+        <TextInput
+          value={PhoneNumber}
+          onChangeText={setPhoneNumber}
+          style={tw("text-center text-xl pb-2")}
+          placeholder="הכנס בבקשה את מספר הפלאפון "
+        />
       </View>
 
       <View style={styles.container}>
         <View>
           <View style={styles.checkboxContainer}>
-            {/* <CheckBox
-              value={isAnimals}
-              onValueChange={setIsAnimals}
-              style={styles.checkbox}
-            /> */}
-            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
-              console.log('TouchableOpacityTouchableOpacity');
-              setIsAnimals(!isAnimals)
-            }}>
-              {isAnimals ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            <TouchableOpacity
+              style={{ width: 20, height: 20 }}
+              onPress={() => {
+                console.log("TouchableOpacityTouchableOpacity");
+                setIsAnimals(!isAnimals);
+              }}
+            >
+              {isAnimals ? (
+                <Fontisto name="checkbox-active" size={24} color="black" />
+              ) : (
+                <Fontisto name="checkbox-passive" size={24} color="black" />
+              )}
             </TouchableOpacity>
 
-            <Text style={styles.label}>בעלי חיים בדירה</Text>
+            <Text style={tw("text-center p-4 font-bold text-red-400")}>
+              בעלי חיים בדירה
+            </Text>
           </View>
         </View>
         <View style={styles.container}>
           <View style={styles.checkboxContainer}>
-            {/* <Checkbox
-              value={isSmokers}
-              onValueChange={setIsSmokers}
-              style={styles.checkbox}
-            /> */}
-            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
-              console.log('TouchableOpacityTouchableOpacity');
-              setIsSmokers(!isSmokers)
-            }}>
-              {isSmokers ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            <TouchableOpacity
+              style={{ width: 20, height: 20 }}
+              onPress={() => {
+                console.log("TouchableOpacityTouchableOpacity");
+                setIsSmokers(!isSmokers);
+              }}
+            >
+              {isSmokers ? (
+                <Fontisto name="checkbox-active" size={24} color="black" />
+              ) : (
+                <Fontisto name="checkbox-passive" size={24} color="black" />
+              )}
             </TouchableOpacity>
-            <Text style={styles.label}>מעשנים בדירה</Text>
+            <Text style={tw("text-center p-4 font-bold text-red-400")}>
+              מעשנים בדירה
+            </Text>
           </View>
         </View>
       </View>
       <View>
         <View style={styles.container}>
           <View style={styles.checkboxContainer}>
-            {/* <CheckBox
-              value={isstudent}
-              onValueChange={setIsStudent}
-              style={styles.checkbox}
-            /> */}
-            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
-              console.log('TouchableOpacityTouchableOpacity');
-              setIsStudent(!isstudent)
-            }}>
-              {isstudent ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            <TouchableOpacity
+              style={{ width: 20, height: 20 }}
+              onPress={() => {
+                console.log("TouchableOpacityTouchableOpacity");
+                setIsStudent(!isstudent);
+              }}
+            >
+              {isstudent ? (
+                <Fontisto name="checkbox-active" size={24} color="black" />
+              ) : (
+                <Fontisto name="checkbox-passive" size={24} color="black" />
+              )}
             </TouchableOpacity>
-            <Text style={styles.label}>סטודנטים</Text>
+            <Text style={tw("text-center p-4 font-bold text-red-400")}>
+              סטודנטים
+            </Text>
           </View>
         </View>
         <View style={styles.container}>
           <View style={styles.checkboxContainer}>
-            {/* <CheckBox
-              value={Sabbath}
-              onValueChange={setSabbath}
-              style={styles.checkbox}
-            /> */}
-            <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
-              console.log('TouchableOpacityTouchableOpacity');
-              setSabbath(!Sabbath)
-            }}>
-              {Sabbath ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+            <TouchableOpacity
+              style={{ width: 20, height: 20 }}
+              onPress={() => {
+                console.log("TouchableOpacityTouchableOpacity");
+                setSabbath(!Sabbath);
+              }}
+            >
+              {Sabbath ? (
+                <Fontisto name="checkbox-active" size={24} color="black" />
+              ) : (
+                <Fontisto name="checkbox-passive" size={24} color="black" />
+              )}
             </TouchableOpacity>
-            <Text style={styles.label}>שומרים שבת</Text>
+            <Text style={tw("text-center p-4 font-bold text-red-400")}>
+              שומרים שבת
+            </Text>
           </View>
         </View>
       </View>
       <View style={styles.container}>
         <View style={styles.checkboxContainer}>
-          {/* <CheckBox
-            value={iskosher}
-            onValueChange={setiskosher}
-            style={styles.checkbox}
-          /> */}
-          <TouchableOpacity style={{ width: 20, height: 20 }} onPress={() => {
-            console.log('TouchableOpacityTouchableOpacity');
-            setiskosher(!iskosher)
-          }}>
-            {iskosher ? <Image source={require('../assets/imgs/checkbox-fill.png')} /> : <Image source={require('../assets/imgs/checkbox-empty.png')} />}
+          <TouchableOpacity
+            style={{ width: 20, height: 20 }}
+            onPress={() => {
+              console.log("TouchableOpacityTouchableOpacity");
+              setiskosher(!iskosher);
+            }}
+          >
+            {iskosher ? (
+              <Fontisto name="checkbox-active" size={24} color="black" />
+            ) : (
+              <Fontisto name="checkbox-passive" size={24} color="black" />
+            )}
           </TouchableOpacity>
-          <Text style={styles.label}>כשר</Text>
+          <Text style={tw("text-center p-4 font-bold text-red-400")}>כשר</Text>
         </View>
       </View>
       <View style={styles.container}></View>
@@ -220,7 +249,10 @@ const AddApartment = ({ route }) => {
         <View style={{ alignItems: "center", justifyContent: "center" }}>
           <Button title="הוספת תמונה" onPress={pickImage} />
           {image && (
-            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
           )}
         </View>
         <TouchableOpacity
@@ -234,7 +266,6 @@ const AddApartment = ({ route }) => {
           <Text style={tw("text-center text-white text-xl")}>עדכון דירה </Text>
         </TouchableOpacity>
       </View>
-
     </ScrollView>
   );
 };

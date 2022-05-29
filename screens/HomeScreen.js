@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  MaterialCommunityIcons,
   SafeAreaView,
   Modal,
 } from "react-native";
@@ -36,7 +37,7 @@ const HomeScreen = () => {
   const swipeRef = useRef(null);
   const [showFilter, setShowFilter] = useState(false);
   const context = useContext(AppContext);
-  const [idx, setIdx] = useState(0)
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
     getAprtments();
   }, []);
@@ -105,22 +106,21 @@ const HomeScreen = () => {
             >
               <Image
                 style={tw("h-10 w-10 rounded-full")}
-                source={{ uri: user.photoUrl || user.photoURL || require('../Admin.png') }}
+                source={{
+                  uri:
+                    user.photoUrl || user.photoURL || require("../Admin.png"),
+                }}
               />
             </TouchableOpacity>
           </View>
         )}
-        <TouchableOpacity onPress={() => {
-          handleNavEdit();
-        }}
+        <TouchableOpacity
+          onPress={() => {
+            handleNavEdit();
+          }}
           style={{ width: 50, height: 50 }}
         >
-          <MaterialIcons
-
-            name="add-business"
-            size={40}
-            color="black"
-          />
+          <MaterialIcons name="add-business" size={40} color="black" />
         </TouchableOpacity>
 
         <TouchableOpacity>
@@ -194,9 +194,15 @@ const HomeScreen = () => {
                     <Text style={tw("text-xl font-bold")}>{card?.Address}</Text>
                   </View>
 
-                  <TouchableOpacity onPress={() => navigation.navigate("SingleApartment", { apartment: card })}>
-                    <Text>
-                      go to details</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("SingleApartment", {
+                        apartment: card,
+                      })
+                    }
+                  >
+                    <MaterialIcons name="more-horiz" size={40} color="black" />
+                    {/* <Text >פרטים נוספים</Text> */}
                   </TouchableOpacity>
                 </View>
               ) : (
@@ -210,12 +216,7 @@ const HomeScreen = () => {
                 >
                   <Text style={tw("font-bold pb-5")}>אין דירות להצגה</Text>
 
-                  <Image
-                    style={tw("h-20 w-full")}
-                    height={100}
-                    width={100}
-                    source={{ uri: "https://links.papareact.com/6gb" }}
-                  />
+                  <Entypo name="emoji-sad" size={80} color="black" />
                 </View>
               );
             }}
@@ -223,18 +224,17 @@ const HomeScreen = () => {
             verticalSwipe={false}
             onSwipedLeft={(cardIndex) => {
               // swipeLeft(cardIndex);
-              setIdx(idx + 1)
+              setIdx(idx + 1);
             }}
             onSwipedRight={(cardIndex) => {
               console.log("Swipe MATCH", cardIndex);
-              setIdx(idx + 1)
+              setIdx(idx + 1);
               //swipeRight(cardIndex);
               userService.addFav(user, filteredItems[cardIndex]);
             }}
             cardIndex={0}
             backgroundColor={"#4FD0E9"}
             stackSize={5}
-
           ></Swiper>
         )}
       </View>
@@ -249,7 +249,10 @@ const HomeScreen = () => {
         <TouchableOpacity>
           <FontAwesome
             onPress={() =>
-              Linking.openURL(`https://wa.me/${filteredItems[idx]?.PhoneNumber}`)
+              Linking.openURL(
+                //`https://wa.me/${filteredItems[idx]?.PhoneNumber}`
+                "https://wa.me/0523100707"
+              )
             }
             name="whatsapp"
             size={40}
@@ -258,7 +261,10 @@ const HomeScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity>
           <Feather
-            onPress={() => Linking.openURL(`tel:${filteredItems[idx].phoneNumber}`)}
+            onPress={() =>
+              //Linking.openURL(`tel:${filteredItems[idx].PhoneNumber}`)
+              Linking.openURL(`tel:0523100707`)
+            }
             name="phone-call"
             size={40}
             color="black"
@@ -267,7 +273,10 @@ const HomeScreen = () => {
 
         <TouchableOpacity>
           <AntDesign
-            onPress={() => Linking.openURL(`mailto:${user.email}`)}
+            onPress={() =>
+              //Linking.openURL(`mailto:${user.email}`)}
+              Linking.openURL(`mailto:aviraco1@ac.sce.ac.il`)
+            }
             name="mail"
             size={40}
             color="black"

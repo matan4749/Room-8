@@ -21,6 +21,14 @@ import { AppContext } from "../contexts/appContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { userService } from "../services/userService";
 import tw from "tailwind-rn";
+import { SafeAreaView } from "react-native";
+import {
+  AntDesign,
+  Ionicons,
+  Entypo,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const AuthContext = createContext({});
 const config = {
@@ -43,7 +51,7 @@ export function AuthProvider({ children }) {
   useEffect(
     () =>
       onAuthStateChanged(auth, async (user) => {
-        console.log('here onAuthStateChanged ');
+        console.log("here onAuthStateChanged ");
         if (user) {
           console.log({ user });
           const res = await userService.getByEmail(user.email);
@@ -68,8 +76,8 @@ export function AuthProvider({ children }) {
             idToken,
             accessToken
           );
-          console.log('user:', logInResult.user);
-          setUser(logInResult.user)
+          console.log("user:", logInResult.user);
+          setUser(logInResult.user);
           await signInWithCredential(auth, credential);
         }
         return Promise.reject(); // Or handle user cancelation separatedly
@@ -88,15 +96,6 @@ export function AuthProvider({ children }) {
       });
   };
 
-  // Make the provider update only when it should.
-  // We only want to force re-renders if the user,
-  // loading or error states change.
-  //
-  // Whenever the `value` passed into a provider changes,
-  // the whole tree under the provider re-renders, and
-  // that can be very costly! Even in this case, where
-  // you only get re-renders when logging in and out
-  // we want to keep things very performant.
   const memoedValue = useMemo(
     () => ({
       user,
@@ -104,69 +103,76 @@ export function AuthProvider({ children }) {
       error,
       signInWithGoogle,
       logout,
-      setUser
+      setUser,
     }),
     [user, loading, error]
   );
 
   const Menu = () => {
     return (
-      <View>
-        <ImageBackground
-          source={require("../pexels.png")}
-          resizeMode="cover"
-          style={styles.image}
-        >
+      <SafeAreaView style={tw("flex-1 relative")}>
+        <View>
           <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
             תפריט
           </Text>
-        </ImageBackground>
-        {user && (
-          <>
-            <Text style={tw("text-center text-xl text-gray-500 p-2 font-bold")}>
-              שלום {user.name}❤️
-              <Image
-                style={tw("h-10 w-10 rounded-full")}
-                source={{ uri: user.photoURL }}
-              />
-            </Text>
-          </>
-        )}
 
-        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
-          הדירה שלי
-        </Text>
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("MyApratment")}
-        >
-          <Image style={tw("h-10 w-10")} source={require("../house.png")} />
-        </TouchableOpacity>
-        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
-          מועדפים
-        </Text>
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("Favorites")}
-        >
-          <Image style={tw("h-10 w-10")} source={require("../home.png")} />
-        </TouchableOpacity>
-        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
-          אודות
-        </Text>
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("aboutS")}
-        >
-          <Image style={tw("h-10 w-10")} source={require("../about.png")} />
-        </TouchableOpacity>
-        <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
-          התנתקות
-        </Text>
-        <TouchableOpacity style={styles.menuItem} onPress={logout}>
-          <Image style={tw("h-10 w-10")} source={require("../logout.png")} />
-        </TouchableOpacity>
-      </View>
+          {user && (
+            <>
+              <Text
+                style={tw("text-center text-xl text-gray-500 p-2 font-bold")}
+              >
+                שלום {user.name}❤️
+                <Image
+                  style={tw("h-10 w-10 rounded-full")}
+                  source={{ uri: user.photoURL }}
+                />
+              </Text>
+            </>
+          )}
+
+          <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+            הדירה שלי
+          </Text>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => navigation.navigate("MyApratment")}
+          >
+            <AntDesign name="home" size={50} color="black" />
+          </TouchableOpacity>
+          <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+            מועדפים
+          </Text>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => navigation.navigate("Favorites")}
+          >
+            <MaterialCommunityIcons
+              name="folder-heart"
+              size={50}
+              color="black"
+            />
+          </TouchableOpacity>
+          <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+            אודות
+          </Text>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => navigation.navigate("aboutS")}
+          >
+            <Ionicons
+              name="information-circle-outline"
+              size={50}
+              color="black"
+            />
+          </TouchableOpacity>
+          <Text style={tw("text-justify text-xl text-gray-500 p-2 font-bold")}>
+            התנתקות
+          </Text>
+          <TouchableOpacity style={styles.menuItem} onPress={logout}>
+            <Entypo name="log-out" size={50} color="black" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     );
   };
 
@@ -178,7 +184,11 @@ export function AuthProvider({ children }) {
         toggleMenu: setShowMenu,
       }}
     >
-      <SideMenu isOpen={showMenu} disableGestures={true} menu={showMenu && <Menu />}>
+      <SideMenu
+        isOpen={showMenu}
+        disableGestures={true}
+        menu={showMenu && <Menu />}
+      >
         <AuthContext.Provider value={memoedValue}>
           {!loadingInitial && children}
         </AuthContext.Provider>

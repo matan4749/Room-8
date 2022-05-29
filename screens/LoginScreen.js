@@ -9,20 +9,32 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import { signUp, SignIn, forgotPassword, signInWithGoogleWeb } from "../firebase";
+import {
+  AntDesign,
+  FontAwesome,
+  Entypo,
+  Zocial,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import {
+  signUp,
+  SignIn,
+  forgotPassword,
+  signInWithGoogleWeb,
+} from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 import useAuth from "../hooks/useAuth";
 import tw from "tailwind-rn";
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 const LoginScreen = () => {
   const { user, loading, error, logout, signInWithGoogle } = useAuth();
-  const signWithGoogle = Platform.OS === 'web' ? signInWithGoogleWeb : signInWithGoogle
+  const signWithGoogle =
+    Platform.OS === "web" ? signInWithGoogleWeb : signInWithGoogle;
   const [username, setUsername] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState();
   const navigation = useNavigation();
-
 
   //const{signInWithGoogle}=useAuth();
 
@@ -61,6 +73,7 @@ const LoginScreen = () => {
         >
           <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
             שכחתי סיסמה
+            <MaterialCommunityIcons name="lock-reset" size={24} color="black" />
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -71,18 +84,20 @@ const LoginScreen = () => {
           ]}
         >
           <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
-            כניסה עם גוגל{" "}
+            כניסה עם גוגל
+            <AntDesign name="google" size={24} color="google" />
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Guest")}
           style={[
-            tw("bg-white absolute bottom-60 w-52 rounded-2xl p-4"),
+            tw("bg-white absolute bottom-80 w-52 rounded-2xl p-4"),
             { marginHorizontal: "25%" },
           ]}
         >
           <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
             אורח
+            <Zocial name="guest" size={24} color="black" />
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -94,17 +109,19 @@ const LoginScreen = () => {
         >
           <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
             הרשמה
+            <FontAwesome name="user-plus" size={24} color="black" />
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("LoginForReal")}
           style={[
-            tw("bg-white absolute bottom-70 w-52 rounded-2xl p-4"),
+            tw("bg-white absolute bottom-60 w-52 rounded-2xl p-4"),
             { marginHorizontal: "25%" },
           ]}
         >
           <Text style={[tw("font-semibold text-center"), { color: "#FF5864" }]}>
             התחברות
+            <Entypo name="login" size={24} color="black" />
           </Text>
         </TouchableOpacity>
       </ImageBackground>

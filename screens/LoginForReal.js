@@ -17,40 +17,39 @@ import useAuth from "../hooks/useAuth";
 const LoginForRealScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useAuth()
+  const { setUser } = useAuth();
   console.log({ setUser });
 
   async function login() {
-    console.log({email,password});
-    await SignIn(email, password).then((userCredential) => {
-      // Signed in
-      console.log({ userCredential });
-      const user = userCredential.user;
-      setUser(user)
-      // ...
-    })
+    console.log({ email, password });
+    await SignIn(email, password)
+      .then((userCredential) => {
+        // Signed in
+        console.log({ userCredential });
+        const user = userCredential.user;
+        setUser(user);
+        // ...
+      })
       .catch((error) => {
-        console.log({error});
+        console.log({ error });
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
-      });;
+      });
   }
-
-
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Email"
+          placeholder="איימל"
           keyboardType="email-address"
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="סיסמה"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
@@ -63,7 +62,7 @@ const LoginForRealScreen = () => {
           onPress={login}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Login</Text>
+          <Text style={styles.buttonOutlineText}>התחברות</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

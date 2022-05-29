@@ -14,7 +14,6 @@ import {
 import { auth } from "../firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { signUp, SignIn, signInWithGoogle } from "../firebase";
-import useAuth from "../hooks/useAuth";
 
 const SignUpScreen = () => {
   const [username, setUsername] = useState();
@@ -22,23 +21,9 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState();
   const [city, setCity] = useState();
-  const { setUser } = useAuth()
-  console.log({ setUser });
+
   async function handlesignup() {
-    console.log('gg');
-    signUp(email, password).then((userCredential) => {
-      // Signed in
-      console.log({ userCredential });
-      const user = userCredential.user;
-      // ...
-      setUser(user)
-    })
-      .catch((error) => {
-        console.log({ error });
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });;
+    await signUp(email, password);
   }
   async function handlesignIn() {
     await SignIn(email, password);
@@ -52,27 +37,27 @@ const SignUpScreen = () => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="username"
+          placeholder="שם פרטי"
           value={username}
           onChangeText={(text) => setUsername(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder="Email"
+          placeholder="איימל"
           keyboardType="email-address"
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="סיסמה"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
         <TextInput
-          placeholder="PhoneNumber"
+          placeholder="מספר פלאפון"
           keyboardType="number-pad"
           value={phoneNumber}
           onChangeText={(text) => setPhoneNumber(text)}
@@ -86,14 +71,7 @@ const SignUpScreen = () => {
           onPress={handlesignup}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Register</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={handlesignInWithGoogle}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>signIn With Google</Text>
+          <Text style={styles.buttonOutlineText}>רישום</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
